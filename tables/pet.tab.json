@@ -1,0 +1,76 @@
+{
+		"name": "Pet",
+		"version": "1.0.0",
+		"decription": "Pet admin",
+		"bind": { "model": "pet" },
+		"apis": {},
+		"columns": {
+		  "ID": {
+			"label": "ID",
+			"view": { "type": "label", "props": { "value": ":id" } }
+		  },
+		  "SN": {
+			"label": "SN",
+			"view": { "type": "label", "props": { "value": ":sn" } },
+			"edit": { "type": "input", "props": { "value": ":sn" } }
+		  },
+		  "Name": {
+			"label": "Name",
+			"view": { "type": "label", "props": { "value": ":name" } },
+			"edit": { "type": "input", "props": { "value": ":name" } }
+		  },
+		  "Kind": {
+			"label": "Kind",
+			"view": { "type": "label", "props": { "value": ":kind" } },
+			"edit": {
+			  "type": "select",
+			  "props": {
+				"value": ":kind",
+				"options": [
+				  { "label": "cat", "value": "cat" },
+				  { "label": "dog", "value": "dog" }
+				]
+			  }
+			}
+		  },
+		  "Description": {
+			"label": "Description",
+			"view": { "type": "label", "props": { "value": ":desc" } },
+			"edit": { "type": "textArea", "props": { "value": ":desc", "rows": 4 } }
+		  }
+		},
+		"filters": {
+		  "Keywords": { "@": "f.Keywords", "in": ["where.name.match"]}
+		},
+		"list": {
+		  "primary": "id",
+		  "layout": {
+			"columns": [
+			  { "name": "ID", "width": 80 },
+			  { "name": "SN", "width": 100 },
+			  { "name": "Name", "width": 200 },
+			  { "name": "Kind" }
+			],
+			"filters": [{ "name": "Keywords" }]
+		  },
+		  "actions": { "pagination": { "props": { "showTotal": true } } },
+		  "option": {  "operation": { "unfold": true} }
+		},
+		"edit": {
+		  "primary": "id",
+		  "layout": {
+			"fieldset": [
+			  {
+				"columns": [
+				  { "name": "SN", "width": 8 },
+				  { "name": "Name", "width": 8 },
+				  { "name": "Kind", "width": 8 },
+				  { "name": "Description", "width": 24 }
+				]
+			  }
+			]
+		  },
+		  "actions": { "cancel": {}, "save": {}, "delete": {} }
+		}
+	  }
+	  

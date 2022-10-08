@@ -1,0 +1,31 @@
+{
+		"label": "System Menu",
+		"version": "1.0.0",
+		"description": "Initialize system menu",
+		"nodes": [
+		  {
+			"name": "Clean menu data",
+			"engine": "xiang",
+			"query": {
+			  "sql": { "stmt": "delete from xiang_menu" }
+			}
+		  },
+		  {
+			"name": "Add new menu",
+			"process": "models.xiang.menu.Save",
+			"args": [
+			  {
+				"name": "Pet",
+				"path": "/table/pet",
+				"icon": "icon-github",
+				"rank": 1,
+				"status": "enabled",
+				"visible_menu": 0,
+				"blocks": 0
+			  }
+			]
+		  }
+		],
+		"output": "done"
+	  }
+	  

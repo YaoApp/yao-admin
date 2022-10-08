@@ -1,0 +1,23 @@
+{
+	"name": "Pet",
+	"table": { "name": "pet", "comment": "Pet" },
+	"columns": [
+	  { "label": "ID", "name": "id", "type": "ID", "comment": "ID" },
+	  { "label": "SN", "name": "sn", "type": "string", "unique": true },
+	  { "label": "Name", "name": "name", "type": "string", "index": true },
+	  {
+		"label": "Kind",
+		"name": "kind",
+		"type": "enum",
+		"option": ["cat", "dog"],
+		"default": "cat",
+		"index": true
+	  },
+	  { "label": "Description", "name": "desc", "type": "string", "comment": "Description" }
+	],
+	"values": [
+	  { "sn": "100001", "name": "Cookie", "kind": "cat", "desc": "a cat" },
+	  { "sn": "100002", "name": "Beibei", "kind": "dog", "desc": "a dog" }
+	],
+	"option": { "timestamps": true, "soft_deletes": true }
+}

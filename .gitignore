@@ -1,0 +1,7 @@
+/data
+/logs
+.env
+./logs/application.log
+./logs/*
+*.log
+logs/

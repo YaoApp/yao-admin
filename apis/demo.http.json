@@ -1,0 +1,20 @@
+{
+	"name": "Hi",
+	"version": "1.0.0",
+	"description": "API demo",
+	"guard": "bearer-jwt",
+	"group": "demo",
+	"paths": [
+	  {
+		"path": "/next",
+		"method": "GET",
+		"guard": "-",
+		"process": "scripts.day.NextDay",
+		"in": ["$query.day"],
+		"out": {
+		  "status": 200,
+		  "type": "application/json"
+		}
+	  }
+	]
+}
