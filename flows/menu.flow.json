@@ -1,0 +1,45 @@
+{
+  "label": "System Menu",
+  "version": "1.0.0",
+  "description": "Initialize system menu",
+  "nodes": [
+    {
+      "name": "Clean menu data",
+      "engine": "xiang",
+      "query": {
+        "sql": { "stmt": "delete from xiang_menu" }
+      }
+    },
+    {
+      "name": "Add new menu",
+      "process": "models.xiang.menu.Insert",
+      "args": [
+        [
+          "id",
+          "name",
+          "path",
+          "icon",
+          "rank",
+          "status",
+          "parent",
+          "visible_menu",
+          "blocks"
+        ],
+        [
+          [
+            1,
+            "连接器",
+            "/table/connector",
+            "icon-database",
+            1,
+            "enabled",
+            null,
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  ],
+  "output": "done"
+}

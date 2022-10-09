@@ -1,0 +1,42 @@
+{
+  "name": "连接器",
+  "version": "1.0.0",
+  "description": "连接器",
+  "guard": "-",
+  "group": "connector",
+  "paths": [
+    {
+      "path": "/search",
+      "method": "GET",
+      "guard": "-",
+      "process": "scripts.connector.search",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/save",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.connector.save",
+      "in": [":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/delete",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.connector.del",
+      "in": [":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

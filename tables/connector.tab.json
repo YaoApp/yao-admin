@@ -1,0 +1,182 @@
+{
+  "name": "连接器",
+  "version": "1.0.0",
+  "decription": "连接器",
+  "bind": {
+    "model": "connector"
+  },
+  "apis": {},
+  "columns": {
+    "ID": {
+      "label": "ID",
+      "view": { "type": "label", "props": { "value": ":id" } }
+    },
+    "语言": {
+      "label": "语言",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":lang"
+        }
+      },
+      "edit": {
+        "type": "select",
+        "props": {
+          "value": ":lang",
+          "options": [
+            {
+              "label": "中文",
+              "value": "zh_cn"
+            },
+            {
+              "label": "英文",
+              "value": "en_us"
+            }
+          ]
+        }
+      }
+    },
+    "版本": {
+      "label": "版本",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":version"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":version"
+        }
+      }
+    },
+
+    "备注": {
+      "label": "备注",
+      "view": {
+        "name": "label",
+        "props": {
+          "value": ":label"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":label"
+        }
+      }
+    },
+    "类型": {
+      "label": "类型",
+      "view": {
+        "name": "label",
+        "props": {
+          "value": ":type"
+        }
+      },
+      "edit": {
+        "type": "select",
+        "props": {
+          "placeholder": "类型",
+          "value": ":type",
+          "options": [
+            {
+              "label": "mysql",
+              "value": "mysql"
+            },
+            {
+              "label": "redis",
+              "value": "redis"
+            },
+            {
+              "label": "sqlite3",
+              "value": "sqlite3"
+            },
+            {
+              "label": "mongo",
+              "value": "mongo"
+            }
+          ]
+        }
+      }
+    },
+    "配置内容": {
+      "label": "配置内容",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":options"
+        }
+      },
+      "edit": {
+        "type": "textArea",
+        "props": {
+          "value": ":options"
+        }
+      }
+    }
+  },
+  "filters": {},
+  "list": {
+    "primary": "id",
+    "layout": {
+      "columns": [
+        { "name": "ID", "width": 130 },
+        { "name": "备注", "width": 100 },
+        { "name": "类型", "width": 100 },
+        { "name": "语言", "width": 180 },
+        { "name": "版本", "width": 100 }
+      ],
+      "filters": []
+    },
+    "actions": {
+      "create": {
+        "type": "button",
+        "props": { "label": "添加", "icon": "fas fa-plus" }
+      },
+      "pagination": {}
+    },
+    "option": {
+      "operation": {
+        "unfold": true,
+        "hideEdit": false
+      }
+    }
+  },
+  "edit": {
+    "primary": "id",
+    "layout": {
+      "fieldset": [
+        {
+          "columns": [
+            { "name": "语言", "width": 12 },
+            { "name": "版本", "width": 12 },
+            { "name": "备注", "width": 12 },
+            { "name": "类型", "width": 12 },
+            { "name": "配置内容", "width": 24 }
+          ]
+        }
+      ]
+    },
+    "actions": {
+      "cancel": {},
+      "save": {
+        "type": "button",
+        "props": {
+          "label": "保存"
+        }
+      },
+      "delete": {
+        "type": "button",
+        "props": {
+          "label": "删除"
+        }
+      }
+    },
+    "option": {
+      "dev": false,
+      "operation": []
+    }
+  }
+}
