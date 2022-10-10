@@ -19,18 +19,22 @@ function GetTableName() {
 }
 
 /**
- * 分析关联关系
+ * 分析关联关系处理器
  * @param {*} type
+ * yao run scripts.schema.Relation
  */
 function Relation() {
+  // var all_table =["test","admin","icon"]
   var all_table = GetTableName();
   var table_arr = [];
   for (var i in all_table) {
-    var col = GetTable();
+    var col = GetTable(all_table[i]);
+
     col.name = all_table[i];
     col.table = {};
     col.table.name = all_table[i];
     col.table.comment = all_table[i];
+    col.relations = {};
     var parent = Process(
       "scripts.relation.parent",
       all_table[i],
@@ -45,6 +49,8 @@ function Relation() {
     );
     table_arr.push(parent);
   }
+
+  table_arr = Process("scripts.relation.other", table_arr);
   return table_arr;
 }
 

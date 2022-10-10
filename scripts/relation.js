@@ -22,6 +22,7 @@ function parent(model_name, columns, table_struct) {
       return table_struct;
     }
   }
+  return table_struct;
 }
 
 /**
@@ -47,10 +48,64 @@ function child(model_name, columns, table_struct) {
       return table_struct;
     }
   }
+  return table_struct;
 }
 
-function other(model_name, columns, table_struct) {
-  
+function other(all_table_struct) {
+  for (var i in all_table_struct) {
+    var temp = all_table_struct[i]["columns"];
+
+    for (var j in temp) {
+      all_table_struct = hasOne(
+        all_table_struct[i]["table"]["name"],
+        all_table_struct
+      );
+      all_table_struct = hasMany(
+        all_table_struct[i]["table"]["name"],
+        temp[j]["name"],
+        all_table_struct
+      );
+    }
+  }
+  return all_table_struct;
 }
 
-function foreignKey(model_name, all_table, all_column) {}
+function hasMany(table_name, field_name, all_table) {
+  // 判断hasMany
+  // 如果包含下划线+id,说明他有可能是别的表的外键
+  if (field_name.indexOf("_id") != -1) {
+    for (var i in all_table) {
+      var target = field_name.replace("_id", "");
+
+      if (target == all_table[i]["table"]["name"]) {
+        all_table[i]["relations"][table_name] = {
+          type: "hasMany",
+          model: table_name,
+          key: field_name,
+          foreign: "id",
+          query: {},
+        };
+      }
+    }
+  }
+  return all_table;
+}
+function hasOne(table_name, all_table) {
+  // 先判断hasOne
+  var foreign_id = table_name + "_id";
+  for (var i in all_table) {
+    var temp_column = all_table[i]["columns"];
+    for (var j in temp_column) {
+      if (temp_column[j]["name"] == foreign_id) {
+        all_table[i]["relations"][table_name] = {
+          type: "hasOne",
+          model:table_name,
+          key: "id",
+          foreign: foreign_id,
+          query: {},
+        };
+      }
+    }
+  }
+  return all_table;
+}
