@@ -1,0 +1,26 @@
+{
+  "name": "APP Menu",
+  "nodes": [],
+  "output": [
+    {
+      "blocks": 0,
+      "icon": "icon-package",
+      "id": 2,
+      "name": "表格",
+      "parent": null,
+      "path": "/x/Table/connector",
+      "visible_menu": 1,
+      "children": [
+        {
+          "blocks": 0,
+          "icon": "icon-database",
+          "name": "连接器",
+          "id": 1,
+          "parent": 2,
+          "path": "/x/Table/connector",
+          "visible_menu": 1
+        }
+      ]
+    }
+  ]
+}

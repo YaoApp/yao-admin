@@ -109,3 +109,8 @@ function hasOne(table_name, all_table) {
   }
   return all_table;
 }
+
+function translate(model_dsl){
+  
+
+}

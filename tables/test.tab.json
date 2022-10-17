@@ -1,0 +1,211 @@
+{
+  "name": "$ENV.TAB_NAME",
+
+  "action": {
+    "bind": { "model": "pet", "option": { "withs": { "doctor": {} } } },
+
+    "search": {
+      "process": "scripts.pet.Search",
+      "default": [
+        {
+          "wheres": [
+            { "column": "doctor_id", "value": "$.user_id" },
+            { "column": "mode", "value": "$.user.status" }
+          ]
+        },
+        1,
+        "$ENV.PAGE_SIZE"
+      ]
+    },
+
+    "find": { "guard": "-" },
+    "get": { "guard": "bearer-jwt,scripts.pet.Guard" },
+
+    "save": {},
+    "delete": {}
+  },
+
+  "layout": {
+    "primary": "id",
+
+    "header": {
+      "preset": {
+        "batch": {
+          "columns": [
+            { "name": "名称", "width": 12 },
+            { "name": "消费金额", "width": 12 },
+            { "name": "入院状态", "width": 12 }
+          ],
+          "deletable": true
+        },
+        "import": {
+          "name": "pet",
+          "operation": [{ "title": "跳转", "link": "$ENV.PAGE_LINK" }]
+        }
+      },
+      "actions": [
+        {
+          "title": "页面跳转",
+          "icon": "icon-airplay",
+          "props": { "type": "history.push", "payload": "/404" }
+        }
+      ]
+    },
+
+    "filter": {
+      "btnAddText": "新增宠物",
+      "columns": [
+        { "name": "名称", "width": 4 },
+        { "name": "状态", "width": 4 }
+      ]
+    },
+
+    "table": {
+      "props": {},
+      "columns": [
+        { "name": "名称" },
+        { "name": "消费金额" },
+        { "name": "状态" },
+        { "name": "入院状态" }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "title": "查看",
+            "icon": "icon-eye",
+            "action": {
+              "Common.openModal": {
+                "width": 640,
+                "Form": { "type": "view", "model": "pet" }
+              }
+            }
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": { "type": "edit", "model": "pet" }
+              }
+            }
+          },
+          {
+            "title": "治愈",
+            "icon": "icon-check",
+            "action": {
+              "Table.save": { "id": ":id", "status": "$ENV.PAGE_STATUS" }
+            },
+            "style": "success",
+            "confirm": { "title": "提示", "desc": "确认变更为治愈状态？" }
+          },
+          {
+            "title": "查看详情",
+            "icon": "icon-book-open",
+            "action": {
+              "Common.historyPush": { "pathname": "/x/Form/pet/:id/edit" }
+            }
+          },
+          {
+            "title": "返回上一页",
+            "icon": "icon-arrow-left",
+            "action": { "Common.historyBack": {} }
+          },
+          {
+            "title": "删除",
+            "icon": "$ENV.PAGE_ICON || icon-trash-2",
+            "action": { "Table.delete": {} },
+            "style": "danger",
+            "confirm": {
+              "title": "$ENV.PAGE_TIPS || 提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            }
+          }
+        ]
+      }
+    }
+  },
+
+  "fields": {
+    "filter": {
+      "名称": {
+        "bind": "where.name.like",
+        "edit": {
+          "type": "Input",
+          "props": { "placeholder": "请输入宠物名称" }
+        }
+      },
+      "状态": {
+        "bind": "where.status.in",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "models.pet.Get",
+                "query": { "select": ["id", "name"] }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "table": {
+      "名称": {
+        "bind": "name",
+        "in": "scripts.pet.SaveName",
+        "view": { "type": "Text", "props": {} },
+        "edit": {
+          "type": "Input",
+          "props": { "placeholder": "请输入宠物名称" }
+        }
+      },
+      "入院状态": {
+        "bind": "status",
+        "in": "scripts.pet.SaveTag",
+        "out": "scripts.pet.GetTag",
+        "view": {
+          "type": "Tag",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "models.pet.Get",
+                "query": { "select": ["id", "name"] }
+              }
+            },
+            "pure": true
+          }
+        },
+        "edit": {
+          "type": "Select",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "models.pet.Get",
+                "query": { "select": ["id", "name"] }
+              }
+            }
+          }
+        }
+      },
+      "状态": {
+        "bind": "mode",
+        "view": {
+          "type": "Switch",
+          "props": {
+            "checkedValue": "enabled",
+            "unCheckedValue": "disabled",
+            "checkedChildren": "开启",
+            "unCheckedChildren": "关闭"
+          }
+        }
+      },
+      "消费金额": {
+        "bind": "cost",
+        "view": { "type": "Text", "props": {} },
+        "edit": { "type": "Input", "props": {} }
+      }
+    }
+  }
+}

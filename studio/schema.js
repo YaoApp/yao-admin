@@ -27,7 +27,17 @@ function Relation() {
   // var all_table =["test","admin","icon"]
   var all_table = GetTableName();
   var table_arr = [];
+
   for (var i in all_table) {
+    if (
+      all_table[i] == "xiang_menu" ||
+      all_table[i] == "xiang_user" ||
+      all_table[i] == "xiang_workflow" ||
+      all_table[i] == "pet"
+    ) {
+      continue;
+    }
+
     var col = GetTable(all_table[i]);
 
     col.name = all_table[i];
@@ -35,22 +45,14 @@ function Relation() {
     col.table.name = all_table[i];
     col.table.comment = all_table[i];
     col.relations = {};
-    var parent = Process(
-      "scripts.relation.parent",
-      all_table[i],
-      col.columns,
-      col
-    );
-    var parent = Process(
-      "scripts.relation.child",
-      all_table[i],
-      col.columns,
-      parent
-    );
+    var parent = Studio("relation.parent", all_table[i], col.columns, col);
+    var parent = Studio("relation.child", all_table[i], col.columns, parent);
+
     table_arr.push(parent);
   }
 
-  table_arr = Process("scripts.relation.other", table_arr);
+  table_arr = Studio("relation.other", table_arr);
+
   return table_arr;
 }
 
@@ -79,7 +81,7 @@ function Move() {
       Process("fs.dsl.Remove", target_name);
     } else {
       // 否则就创建文件
-      Process("fs.dsl.WriteFile", target_name);
+      // Process("fs.dsl.WriteFile", target_name);
     }
   }
 }
@@ -105,8 +107,3 @@ function Copy(from, to, name) {
   console.log([from, to]);
   Process("fs.dsl.Copy", from, to + "/" + name);
 }
-
-/**
- * 获取图标
- */
-function Icon() {}
