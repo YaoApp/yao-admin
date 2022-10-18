@@ -13,9 +13,6 @@ function GetTable(name) {
 function GetTableName() {
   let res = Process("schemas.default.Tables");
   return res;
-  // for (var i in res) {
-  //   //  todo 分析表字段关联关系
-  // }
 }
 
 /**
@@ -24,7 +21,6 @@ function GetTableName() {
  * yao run scripts.schema.Relation
  */
 function Relation() {
-  // var all_table =["test","admin","icon"]
   var all_table = GetTableName();
   var table_arr = [];
 
@@ -40,10 +36,11 @@ function Relation() {
 
     var col = GetTable(all_table[i]);
 
-    col.name = all_table[i];
+    col.name = Studio("relation.translate", all_table[i]);
+    col.decription = col.name;
     col.table = {};
     col.table.name = all_table[i];
-    col.table.comment = all_table[i];
+    col.table.comment = col.name;
     col.relations = {};
     var parent = Studio("relation.parent", all_table[i], col.columns, col);
     var parent = Studio("relation.child", all_table[i], col.columns, parent);
@@ -79,9 +76,6 @@ function Move() {
 
       // 复制完成后,删除文件
       Process("fs.dsl.Remove", target_name);
-    } else {
-      // 否则就创建文件
-      // Process("fs.dsl.WriteFile", target_name);
     }
   }
 }

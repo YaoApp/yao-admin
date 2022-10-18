@@ -99,7 +99,7 @@ function hasOne(table_name, all_table) {
       if (temp_column[j]["name"] == foreign_id) {
         all_table[i]["relations"][table_name] = {
           type: "hasOne",
-          model:table_name,
+          model: table_name,
           key: "id",
           foreign: foreign_id,
           query: {},
@@ -110,7 +110,22 @@ function hasOne(table_name, all_table) {
   return all_table;
 }
 
-function translate(model_dsl){
-  
-
+// yao studio run relation.translate icon
+function translate(keywords) {
+  var url = "https://brain.yaoapps.com/api/keyword/column";
+  let response = Process(
+    "xiang.network.PostJSON",
+    url,
+    {
+      keyword: [keywords],
+    },
+    {}
+  );
+  var res = keywords;
+  if (response.status == 200) {
+    if (response.data.data) {
+      var res = response.data.data[0]["label"];
+    }
+  }
+  return res;
 }

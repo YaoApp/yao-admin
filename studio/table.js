@@ -2,167 +2,26 @@
 /**
  * 创建表格
  */
-function Create() {
-  var model_dsl = Studio("schema.Relation");
-
+function Create(model_dsl) {
   var fs = new FS("dsl");
   for (var i in model_dsl) {
-    var table_name = model_dsl[i]["table"]["name"] + ".mod.json";
-    var table = JSON.stringify(model_dsl[i]);
-    Studio("move.Move", "models", table_name);
-    fs.WriteFile("/models/" + table_name, table);
+    var table_name = model_dsl[i]["table"]["name"] + ".tab.json";
+    var dsl = toTable(model_dsl[i]);
+    var table = JSON.stringify(dsl);
+    Studio("move.Move", "tables", table_name);
+    fs.WriteFile("/tables/" + table_name, table);
   }
+  // 创建菜单
+  Studio("menu.Create", model_dsl);
 }
 
 function toTable(model_dsl) {
+  const columns = model_dsl.columns || [];
   var tableTemplate = {
     name: model_dsl.name || "表格",
-    action: {
-      bind: { model: model_dsl.table.name, option: {} },
-      search: {
-        default: [{}, 1, 10],
-      },
-    },
-    layout: {
-      primary: "id",
-
-      header: {
-        preset: {
-          batch: {
-            columns: [
-              { name: "名称", width: 12 },
-              { name: "消费金额", width: 12 },
-              { name: "入院状态", width: 12 },
-            ],
-            deletable: true,
-          },
-          import: {},
-        },
-        actions: [],
-      },
-
-      filter: {},
-
-      table: {
-        props: {},
-        columns: [
-          { name: "名称" },
-          { name: "消费金额" },
-          { name: "状态" },
-          { name: "入院状态" },
-        ],
-        operation: {
-          fold: false,
-          actions: [
-            {
-              title: "查看",
-              icon: "icon-eye",
-              action: {
-                "Common.openModal": {
-                  width: 640,
-                  Form: { type: "view", model: model_dsl.table.name },
-                },
-              },
-            },
-            {
-              title: "编辑",
-              icon: "icon-edit-2",
-              action: {
-                "Common.openModal": {
-                  Form: { type: "edit", model: model_dsl.table.name },
-                },
-              },
-            },
-          ],
-        },
-      },
-    },
-    "fields": {
-      "filter": {
-        "名称": {
-          "bind": "where.name.like",
-          "edit": {
-            "type": "Input",
-            "props": { "placeholder": "请输入宠物名称" }
-          }
-        },
-        "状态": {
-          "bind": "where.status.in",
-          "edit": {
-            "type": "Select",
-            "props": {
-              "xProps": {
-                "$remote": {
-                  "process": "models.pet.Get",
-                  "query": { "select": ["id", "name"] }
-                }
-              }
-            }
-          }
-        }
-      },
-  
-      "table": {
-        "名称": {
-          "bind": "name",
-          "in": "scripts.pet.SaveName",
-          "view": { "type": "Text", "props": {} },
-          "edit": {
-            "type": "Input",
-            "props": { "placeholder": "请输入宠物名称" }
-          }
-        },
-        "入院状态": {
-          "bind": "status",
-          "in": "scripts.pet.SaveTag",
-          "out": "scripts.pet.GetTag",
-          "view": {
-            "type": "Tag",
-            "props": {
-              "xProps": {
-                "$remote": {
-                  "process": "models.pet.Get",
-                  "query": { "select": ["id", "name"] }
-                }
-              },
-              "pure": true
-            }
-          },
-          "edit": {
-            "type": "Select",
-            "props": {
-              "xProps": {
-                "$remote": {
-                  "process": "models.pet.Get",
-                  "query": { "select": ["id", "name"] }
-                }
-              }
-            }
-          }
-        },
-        "状态": {
-          "bind": "mode",
-          "view": {
-            "type": "Switch",
-            "props": {
-              "checkedValue": "enabled",
-              "unCheckedValue": "disabled",
-              "checkedChildren": "开启",
-              "unCheckedChildren": "关闭"
-            }
-          }
-        },
-        "消费金额": {
-          "bind": "cost",
-          "view": { "type": "Text", "props": {} },
-          "edit": { "type": "Input", "props": {} }
-        }
-      }
-    },
-
     version: "1.0.0",
-
-    decription: model_dsl.decription || "a dyform instance",
+    decription: model_dsl.decription || "表格",
+    bind: { model: model_dsl.table.name },
     columns: {},
     filters: {},
     list: {
@@ -170,7 +29,7 @@ function toTable(model_dsl) {
       layout: { columns: [], filters: [] },
       actions: {
         pagination: { props: { showTotal: true } },
-        create: { props: { label: "Create" } },
+        create: { props: { label: "添加" } },
       },
       option: { operation: { unfold: true } },
     },
@@ -182,12 +41,11 @@ function toTable(model_dsl) {
       actions: {
         cancel: {},
         save: {},
-        delete: { type: "button", props: { label: "Delete" } },
+        delete: { type: "button", props: { label: "删除" } },
       },
       option: { dev: true },
     },
   };
-
   columns.forEach((column) => {
     var col = castTableColumn(column);
     if (col) {
@@ -205,6 +63,89 @@ function toTable(model_dsl) {
       );
     }
   });
-
   return tableTemplate;
+}
+function castTableColumn(column) {
+  column = column || {};
+  const props = column.props || {};
+  const title = column.label;
+  const name = column.name;
+
+  const bind = `:${name}`;
+  if (!name) {
+    log.Error("castTableColumn: missing name");
+    return false;
+  }
+
+  if (!title) {
+    log.Error("castTableColumn: missing title");
+    return false;
+  }
+
+  var res = {
+    columns: [],
+    filters: [],
+    list: { columns: [], filters: [] },
+    edit: [],
+  };
+
+  var component = {
+    label: title,
+    view: { type: "label", props: { value: `:${name}` } },
+    edit: {},
+  };
+
+  switch (column.type) {
+    case "string":
+      component.edit = { type: "input", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    case "text":
+      component.edit = { type: "textArea", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    case "integer":
+      component.edit = { type: "input", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    case "decimal":
+      component.edit = { type: "input", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    case "datetime":
+      component.edit = { type: "datePicker", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    case "enum":
+      component.edit = { type: "select", props: { value: bind } };
+      res.list.columns.push({ name: title });
+      res.edit.push({ name: title, width: 24 });
+      break;
+    default:
+      log.Error("castTableColumn: Type %s does not support", column.type);
+      return false;
+  }
+
+  res.columns.push({ name: title, component: component });
+
+  // Convert to filter based on DSL description
+  if (column.search) {
+    var filter = {
+      label: title,
+      bind: `where.${name}.match`,
+      input: {
+        type: "input",
+        props: { placeholder: props.placeholder || `type ${title}...` },
+      },
+    };
+    res.filters.push({ name: title, filter: filter });
+    res.list.filters.push({ name: title });
+  }
+
+  return res;
 }

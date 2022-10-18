@@ -12,4 +12,6 @@ function Create() {
     Studio("move.Move", "models", table_name);
     fs.WriteFile("/models/" + table_name, table);
   }
+  // 创建表格dsl
+  Studio("table.Create", model_dsl);
 }
