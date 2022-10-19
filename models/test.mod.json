@@ -1,42 +1,4 @@
 {
-  "columns": [
-    {
-      "label": "子集id",
-      "type": "integer",
-      "comment": "子集id",
-      "precision": 10,
-      "name": "children_id"
-    },
-    {
-      "precision": 10,
-      "name": "icon_id",
-      "label": "图标id",
-      "type": "integer",
-      "comment": "图标id"
-    },
-    {
-      "primary": true,
-      "name": "id",
-      "label": "ID",
-      "type": "ID",
-      "comment": "ID",
-      "precision": 20
-    },
-    {
-      "type": "string",
-      "comment": "字段名称",
-      "length": 200,
-      "name": "name",
-      "label": "字段名称"
-    },
-    {
-      "label": "父级id",
-      "type": "integer",
-      "comment": "父级id",
-      "precision": 10,
-      "name": "parent_id"
-    }
-  ],
   "option": {
     "timestamps": true,
     "soft_deletes": true
@@ -47,34 +9,48 @@
     "comment": "测验",
     "name": "test"
   },
-  "relations": {
-    "children": {
-      "key": "parent_id",
-      "foreign": "id",
-      "query": {},
-      "type": "hasMany",
-      "model": "test"
+  "relations": {},
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "precision": 20,
+      "primary": true
     },
-    "parent": {
-      "foreign": "children_id",
-      "query": {},
-      "type": "hasOne",
-      "model": "test",
-      "key": "id"
+    {
+      "name": "name",
+      "label": "名称",
+      "type": "string",
+      "comment": "名称",
+      "length": 200,
+      "index": true
     },
-    "admin": {
-      "query": {},
-      "type": "hasMany",
-      "model": "admin",
-      "key": "test_id",
-      "foreign": "id"
+    {
+      "precision": 10,
+      "name": "sort",
+      "label": "排序字段",
+      "type": "integer",
+      "comment": "排序字段"
     },
-    "icon": {
-      "type": "hasOne",
-      "model": "icon",
-      "key": "id",
-      "foreign": "icon_id",
-      "query": {}
+    {
+      "label": "量",
+      "type": "enum",
+      "comment": "量",
+      "length": 2,
+      "option": [
+        "克",
+        "毫升"
+      ],
+      "name": "unit"
+    },
+    {
+      "default": 0,
+      "name": "weight",
+      "label": "量",
+      "type": "integer",
+      "comment": "量",
+      "precision": 10,
+      "nullable": true
     }
-  }
+  ]
 }

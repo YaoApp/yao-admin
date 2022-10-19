@@ -6,38 +6,8 @@
     "model": "test"
   },
   "columns": {
-    "子集id": {
-      "label": "子集id",
-      "view": {
-        "type": "label",
-        "props": {
-          "value": ":children_id"
-        }
-      },
-      "edit": {
-        "type": "input",
-        "props": {
-          "value": ":children_id"
-        }
-      }
-    },
-    "图标id": {
-      "label": "图标id",
-      "view": {
-        "type": "label",
-        "props": {
-          "value": ":icon_id"
-        }
-      },
-      "edit": {
-        "type": "input",
-        "props": {
-          "value": ":icon_id"
-        }
-      }
-    },
-    "字段名称": {
-      "label": "字段名称",
+    "名称": {
+      "label": "名称",
       "view": {
         "type": "label",
         "props": {
@@ -51,18 +21,33 @@
         }
       }
     },
-    "父级id": {
-      "label": "父级id",
+    "排序字段": {
+      "label": "排序字段",
       "view": {
         "type": "label",
         "props": {
-          "value": ":parent_id"
+          "value": ":sort"
         }
       },
       "edit": {
         "type": "input",
         "props": {
-          "value": ":parent_id"
+          "value": ":sort"
+        }
+      }
+    },
+    "量": {
+      "label": "量",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":weight"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":weight"
         }
       }
     }
@@ -73,16 +58,16 @@
     "layout": {
       "columns": [
         {
-          "name": "子集id"
+          "name": "名称"
         },
         {
-          "name": "图标id"
+          "name": "排序字段"
         },
         {
-          "name": "字段名称"
+          "name": "量"
         },
         {
-          "name": "父级id"
+          "name": "量"
         }
       ],
       "filters": []
@@ -112,19 +97,19 @@
         {
           "columns": [
             {
-              "name": "子集id",
+              "name": "名称",
               "width": 24
             },
             {
-              "name": "图标id",
+              "name": "排序字段",
               "width": 24
             },
             {
-              "name": "字段名称",
+              "name": "量",
               "width": 24
             },
             {
-              "name": "父级id",
+              "name": "量",
               "width": 24
             }
           ]

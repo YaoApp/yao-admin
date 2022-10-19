@@ -98,6 +98,6 @@ function Mkdir(name) {
 }
 
 function Copy(from, to, name) {
-  console.log([from, to]);
+
   Process("fs.dsl.Copy", from, to + "/" + name);
 }

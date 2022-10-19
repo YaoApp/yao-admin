@@ -49,7 +49,7 @@ function toTable(model_dsl) {
   columns.forEach((column) => {
     var col = castTableColumn(column);
     if (col) {
-      console.log(col);
+
       col.columns.forEach((c) => (tableTemplate.columns[c.name] = c.component));
       col.filters.forEach((f) => (tableTemplate.filters[f.name] = f.filter));
       col.edit.forEach((c) =>

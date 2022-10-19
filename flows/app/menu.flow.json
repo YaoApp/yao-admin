@@ -1,0 +1,10 @@
+{
+  "name": "APP Menu",
+  "nodes": [
+    {
+      "name": "all",
+      "process": "models.xiang.menu.Get"
+    }
+  ],
+  "output": "{{$res.all}}"
+}
