@@ -1,0 +1,170 @@
+{
+  "name": "连接器",
+  "version": "1.0.0",
+  "decription": "连接器",
+  "bind": {
+    "model": "connector"
+  },
+  "columns": {
+    "label": {
+      "label": "label",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":label"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":label"
+        }
+      }
+    },
+    "语言": {
+      "label": "语言",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":lang"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":lang"
+        }
+      }
+    },
+    "数据库版本": {
+      "label": "数据库版本",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":sql_version"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":sql_version"
+        }
+      }
+    },
+    "类型": {
+      "label": "类型",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":type"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":type"
+        }
+      }
+    },
+    "版本": {
+      "label": "版本",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":version"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":version"
+        }
+      }
+    }
+  },
+  "filters": {},
+  "list": {
+    "primary": "id",
+    "layout": {
+      "columns": [
+        {
+          "name": "label"
+        },
+        {
+          "name": "语言"
+        },
+        {
+          "name": "数据库版本"
+        },
+        {
+          "name": "类型"
+        },
+        {
+          "name": "版本"
+        }
+      ],
+      "filters": []
+    },
+    "actions": {
+      "pagination": {
+        "props": {
+          "showTotal": true
+        }
+      },
+      "create": {
+        "props": {
+          "label": "添加"
+        }
+      }
+    },
+    "option": {
+      "operation": {
+        "unfold": true
+      }
+    }
+  },
+  "edit": {
+    "primary": "id",
+    "layout": {
+      "fieldset": [
+        {
+          "columns": [
+            {
+              "name": "label",
+              "width": 24
+            },
+            {
+              "name": "语言",
+              "width": 24
+            },
+            {
+              "name": "数据库版本",
+              "width": 24
+            },
+            {
+              "name": "类型",
+              "width": 24
+            },
+            {
+              "name": "版本",
+              "width": 24
+            }
+          ]
+        }
+      ]
+    },
+    "actions": {
+      "cancel": {},
+      "save": {},
+      "delete": {
+        "type": "button",
+        "props": {
+          "label": "删除"
+        }
+      }
+    },
+    "option": {
+      "dev": true
+    }
+  }
+}

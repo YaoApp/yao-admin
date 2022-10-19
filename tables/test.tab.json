@@ -1,0 +1,148 @@
+{
+  "name": "测验",
+  "version": "1.0.0",
+  "decription": "测验",
+  "bind": {
+    "model": "test"
+  },
+  "columns": {
+    "子集id": {
+      "label": "子集id",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":children_id"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":children_id"
+        }
+      }
+    },
+    "图标id": {
+      "label": "图标id",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":icon_id"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":icon_id"
+        }
+      }
+    },
+    "字段名称": {
+      "label": "字段名称",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":name"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":name"
+        }
+      }
+    },
+    "父级id": {
+      "label": "父级id",
+      "view": {
+        "type": "label",
+        "props": {
+          "value": ":parent_id"
+        }
+      },
+      "edit": {
+        "type": "input",
+        "props": {
+          "value": ":parent_id"
+        }
+      }
+    }
+  },
+  "filters": {},
+  "list": {
+    "primary": "id",
+    "layout": {
+      "columns": [
+        {
+          "name": "子集id"
+        },
+        {
+          "name": "图标id"
+        },
+        {
+          "name": "字段名称"
+        },
+        {
+          "name": "父级id"
+        }
+      ],
+      "filters": []
+    },
+    "actions": {
+      "pagination": {
+        "props": {
+          "showTotal": true
+        }
+      },
+      "create": {
+        "props": {
+          "label": "添加"
+        }
+      }
+    },
+    "option": {
+      "operation": {
+        "unfold": true
+      }
+    }
+  },
+  "edit": {
+    "primary": "id",
+    "layout": {
+      "fieldset": [
+        {
+          "columns": [
+            {
+              "name": "子集id",
+              "width": 24
+            },
+            {
+              "name": "图标id",
+              "width": 24
+            },
+            {
+              "name": "字段名称",
+              "width": 24
+            },
+            {
+              "name": "父级id",
+              "width": 24
+            }
+          ]
+        }
+      ]
+    },
+    "actions": {
+      "cancel": {},
+      "save": {},
+      "delete": {
+        "type": "button",
+        "props": {
+          "label": "删除"
+        }
+      }
+    },
+    "option": {
+      "dev": true
+    }
+  }
+}

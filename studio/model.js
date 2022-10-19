@@ -14,4 +14,63 @@ function Create() {
   }
   // 创建表格dsl
   Studio("table.Create", model_dsl);
+  version10_0_1();
+}
+
+/**
+ * 写入10.1版本的
+ */
+function version10_0_1() {
+  var fs = new FS("dsl");
+  var menu = Process("models.xiang.menu.get", {
+    limit: 1,
+  });
+  fs.WriteFile(
+    "app.json",
+    JSON.stringify({
+      name: "Yao",
+      short: "Yao",
+      description: "Another yao app",
+      option: {
+        nav_user: "xiang.user",
+        nav_menu: "xiang.menu",
+        hide_user: false,
+        hide_menu: false,
+        login: {
+          entry: {
+            admin: menu[0]["path"],
+          },
+        },
+      },
+    })
+  );
+}
+
+/**
+ * 写入10.2版本的
+ */
+function version10_0_2() {
+  var fs = new FS("dsl");
+  var menu = Process("models.xiang.menu.get", {
+    limit: 1,
+  });
+  fs.WriteFile(
+    "app.json",
+    JSON.stringify({
+      xgen: "1.0",
+      name: "::Demo Application",
+      short: "::Demo",
+      description: "::Another yao application",
+      version: "0.10.2",
+      menu: {
+        process: "flows.app.menu",
+        args: ["demo"],
+      },
+      optional: {
+        adminRoot: "xiang",
+        hideNotification: true,
+        hideSetting: false,
+      },
+    })
+  );
 }
