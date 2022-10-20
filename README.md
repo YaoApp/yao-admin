@@ -490,4 +490,53 @@ function castTableColumn(column) {
 }
 ```
 
-最后运行命令`yao studio run model.Create`,我们可以看到创建了不少的数据模型和表格,我们运行`yao start`访问一下`127.0.0.1:5099/xiang/admin/login`
+新增菜单图标脚本 `/studio/menu.js`
+
+```javascript
+function Create(model_dsl) {
+  Process("models.xiang.menu.DestroyWhere", {
+    wheres: [{ column: "id", op: "ne", value: 0 }],
+  });
+  var columns = [
+    "name",
+    "path",
+    "icon",
+    "rank",
+    "status",
+    "parent",
+    "visible_menu",
+    "blocks",
+  ];
+  var insert = [];
+  for (var i in model_dsl) {
+    var name = model_dsl[i]["table"]["name"];
+    var icon = GetIcon(name);
+    insert[i] = [
+      model_dsl[i].name,
+      "/table/" + name,
+      icon,
+      i + 1,
+      "enabled",
+      null,
+      0,
+      0,
+    ];
+  }
+  Process("models.xiang.menu.insert", columns, insert);
+}
+
+/**yao studio run menu.icon user
+ * 获取菜单图标
+ * @param {*} name
+ */
+function GetIcon(name) {
+  var url = "https://brain.yaoapps.com/api/icon/search?name=" + name;
+  let response = Process("xiang.network.Get", url, {}, {});
+  if (response.status == 200) {
+    return response.data.data;
+  }
+  return "icon-box";
+}
+```
+
+最后运行命令`yao studio run model.Create`,我们可以看到创建了不少的数据模型和表格,我们运行`yao start`访问一下`127.0.0.1:5099/xiang/admin/login`,输入默认用户名: `xiang@iqka.com`， 密码: `A123456p+`

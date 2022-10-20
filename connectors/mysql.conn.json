@@ -5,15 +5,15 @@
   "type": "mysql",
   "version": "8.0.26",
   "options": {
-    "db": "cloudtrek",
+    "db": "test",
     "charset": "utf8mb4",
     "parseTime": true,
     "hosts": [
       {
-        "host": "101.201.56.100",
+        "host": "127.0.0.1",
         "port": "3306",
-        "user": "cloudtrek",
-        "pass": "780588304",
+        "user": "root",
+        "pass": "123456",
         "primary": true
       }
     ]
