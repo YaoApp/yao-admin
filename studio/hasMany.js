@@ -2,7 +2,7 @@ function hasMany(table_name, field_name, all_table) {
   var relation = ["hasMany_id", "hasMany_ID", "hasMany_Id"];
   for (var i in relation) {
     all_table = Studio(
-      "hasOne." + relation[i],
+      "hasmany." + relation[i],
       table_name,
       field_name,
       all_table

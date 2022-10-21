@@ -1,7 +1,7 @@
 function hasOne(table_name, all_table) {
   const relation = ["hasOne_id", "hasOneID", "hasOneId"];
   for (var i in relation) {
-    all_table = Studio("hasOne." + relation[i], table_name, all_table);
+    all_table = Studio("hasone." + relation[i], table_name, all_table);
   }
   return all_table;
 }

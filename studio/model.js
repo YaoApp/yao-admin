@@ -14,7 +14,7 @@ function Create() {
   }
   // 创建表格dsl
   Studio("table.Create", model_dsl);
-  version10_0_1();
+  version10_0_2();
 }
 
 /**
@@ -66,8 +66,8 @@ function version10_0_2() {
         process: "flows.app.menu",
         args: ["demo"],
       },
+      adminRoot: "yao",
       optional: {
-        adminRoot: "xiang",
         hideNotification: true,
         hideSetting: false,
       },

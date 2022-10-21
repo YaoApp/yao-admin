@@ -6,15 +6,24 @@ function Create(model_dsl) {
   var fs = new FS("dsl");
   for (var i in model_dsl) {
     var table_name = model_dsl[i]["table"]["name"] + ".tab.json";
-    var dsl = toTable(model_dsl[i]);
+    //var dsl = toTable(model_dsl[i]);
+    var dsl = Studio("colunm.toTable", model_dsl[i]);
     var table = JSON.stringify(dsl);
     Studio("move.Move", "tables", table_name);
     fs.WriteFile("/tables/" + table_name, table);
+
+    ///
+    var form_name = model_dsl[i]["table"]["name"] + ".form.json";
+    var form_dsl = Studio("colunm.toForm", model_dsl[i]);
+    var form = JSON.stringify(form_dsl);
+    Studio("move.Move", "forms", form_name);
+    fs.WriteFile("/forms/" + form_name, form);
   }
   // 创建菜单
   Studio("menu.Create", model_dsl);
 }
 
+//====================================================老版本的暂时没有用===================
 function toTable(model_dsl) {
   const columns = model_dsl.columns || [];
   var tableTemplate = {
@@ -49,7 +58,6 @@ function toTable(model_dsl) {
   columns.forEach((column) => {
     var col = castTableColumn(column);
     if (col) {
-
       col.columns.forEach((c) => (tableTemplate.columns[c.name] = c.component));
       col.filters.forEach((f) => (tableTemplate.filters[f.name] = f.filter));
       col.edit.forEach((c) =>
