@@ -15,6 +15,7 @@ function Create() {
   // 创建表格dsl
   Studio("table.Create", model_dsl);
   version10_0_2();
+  login();
 }
 
 /**
@@ -51,9 +52,7 @@ function version10_0_1() {
  */
 function version10_0_2() {
   var fs = new FS("dsl");
-  var menu = Process("models.xiang.menu.get", {
-    limit: 1,
-  });
+
   fs.WriteFile(
     "app.json",
     JSON.stringify({
@@ -73,4 +72,27 @@ function version10_0_2() {
       },
     })
   );
+}
+function login() {
+  var fs = new FS("dsl");
+  var menu = Process("models.xiang.menu.get", {
+    limit: 1,
+  });
+  var table_name = "admin.login.json";
+  var table = JSON.stringify({
+    name: "::Admin Login",
+    action: {
+      process: "yao.login.Admin",
+      args: [":payload"],
+    },
+    layout: {
+      entry: menu[0]["path"],
+      captcha: "yao.utils.Captcha",
+      cover: "/assets/images/login/cover.svg",
+      slogan: "::Make Your Dream With Yao App Engine",
+      site: "https://yaoapps.com",
+    },
+  });
+  Studio("move.Move", "logins", table_name);
+  fs.WriteFile("/logins/" + table_name, table);
 }

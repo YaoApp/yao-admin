@@ -18,7 +18,7 @@ function Create(model_dsl) {
     var icon = GetIcon(name);
     insert[i] = [
       model_dsl[i].name,
-      "/table/" + name,
+      "/x/Table/" + name,
       icon,
       i + 1,
       "enabled",

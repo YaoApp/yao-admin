@@ -52,8 +52,6 @@
         "fold": false,
         "actions": [
           {
-            "title": "查看",
-            "icon": "icon-eye",
             "action": {
               "Common.openModal": {
                 "width": 640,
@@ -62,7 +60,9 @@
                   "model": "address"
                 }
               }
-            }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
           },
           {
             "title": "编辑",
@@ -83,24 +83,7 @@
   "fields": {
     "filter": {},
     "table": {
-      "省份": {
-        "edit": {
-          "type": "Input",
-          "bind": "province",
-          "props": {}
-        },
-        "bind": "province",
-        "view": {
-          "type": "Text",
-          "props": {}
-        }
-      },
       "状态": {
-        "view": {
-          "props": {},
-          "type": "Text"
-        },
-        "bind": "status",
         "edit": {
           "props": {
             "options": [
@@ -116,15 +99,21 @@
             "placeholder": "请选择状态"
           },
           "type": "Select"
-        }
+        },
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "bind": "status"
       },
       "所属用户": {
         "bind": "user_id",
         "view": {
-          "type": "Text",
-          "props": {}
+          "props": {},
+          "type": "Text"
         },
         "edit": {
+          "type": "Select",
           "props": {
             "xProps": {
               "$remote": {
@@ -132,21 +121,20 @@
                 "query": {}
               }
             }
-          },
-          "type": "Select"
+          }
         }
       },
       "城市": {
-        "bind": "city",
         "view": {
           "props": {},
           "type": "Text"
         },
         "edit": {
+          "type": "Input",
           "bind": "city",
-          "props": {},
-          "type": "Input"
-        }
+          "props": {}
+        },
+        "bind": "city"
       },
       "详细地址": {
         "bind": "location",
@@ -155,10 +143,22 @@
           "props": {}
         },
         "edit": {
+          "type": "Input",
+          "bind": "location",
+          "props": {}
+        }
+      },
+      "省份": {
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
           "props": {},
           "type": "Input",
-          "bind": "location"
-        }
+          "bind": "province"
+        },
+        "bind": "province"
       }
     }
   }

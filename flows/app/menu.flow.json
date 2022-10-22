@@ -3,7 +3,8 @@
   "nodes": [
     {
       "name": "all",
-      "process": "models.xiang.menu.Get"
+      "process": "models.xiang.menu.Get",
+      "args": [null]
     }
   ],
   "output": "{{$res.all}}"

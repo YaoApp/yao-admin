@@ -1,0 +1,107 @@
+{
+  "layout": {
+    "form": {
+      "props": {},
+      "sections": [
+        {
+          "columns": [
+            {
+              "name": "城市",
+              "width": 8
+            },
+            {
+              "name": "详细地址",
+              "width": 8
+            },
+            {
+              "name": "省份",
+              "width": 8
+            },
+            {
+              "name": "状态",
+              "width": 8
+            },
+            {
+              "width": 8,
+              "name": "所属用户"
+            }
+          ]
+        }
+      ]
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "back": {},
+        "save": {
+          "back": true
+        }
+      },
+      "actions": []
+    }
+  },
+  "fields": {
+    "form": {
+      "所属用户": {
+        "bind": "user_id",
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "query": {},
+                "process": "models.user.Get"
+              }
+            }
+          },
+          "type": "Select"
+        }
+      },
+      "城市": {
+        "bind": "city",
+        "edit": {
+          "type": "Input",
+          "props": {}
+        }
+      },
+      "详细地址": {
+        "bind": "location",
+        "edit": {
+          "type": "Input",
+          "props": {}
+        }
+      },
+      "省份": {
+        "edit": {
+          "type": "Input",
+          "props": {}
+        },
+        "bind": "province"
+      },
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "value": "enabled",
+                "label": "enabled"
+              },
+              {
+                "label": "disabled",
+                "value": "disabled"
+              }
+            ],
+            "placeholder": "请选择状态"
+          },
+          "type": "Select"
+        },
+        "bind": "status"
+      }
+    }
+  },
+  "name": "住址",
+  "action": {
+    "bind": {
+      "model": "address"
+    }
+  }
+}
