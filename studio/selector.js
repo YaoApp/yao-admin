@@ -14,7 +14,7 @@ function Select(column, model_dsl, component) {
   var relation = model_dsl.relations;
   for (var i in relation) {
     if (relation[i].type == "hasOne" && column.name == relation[i]["foreign"]) {
-      var field = Studio("remote.select", i);
+      var field = Studio("remote.select", i, relation[i]);
       var component = {
         bind: i + "." + field,
         view: { props: {}, type: "Text" },
@@ -47,7 +47,7 @@ function EditSelect(column, model_dsl, component) {
   var relation = model_dsl.relations;
   for (var i in relation) {
     if (relation[i].type == "hasOne" && column.name == relation[i]["foreign"]) {
-      var field = Studio("remote.select", i);
+      var field = Studio("remote.select", i, relation[i]);
       var component = {
         bind: bind,
         edit: {

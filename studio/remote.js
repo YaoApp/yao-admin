@@ -1,11 +1,11 @@
-function select(relation_name) {
-  var column = Process("schemas.default.TableGet", relation_name);
+function select(relation_name, relation) {
+  var column = Process("schemas.default.TableGet", relation.model);
   var column = column.columns;
   var res = Speculation(column);
   if (!res) {
     var res = Other(column);
   }
-  CreateScripts(relation_name, res);
+  CreateScripts(relation_name, res, relation);
   return res;
 }
 
@@ -52,14 +52,14 @@ function Other(column) {
  * @param {*} relation_name
  * @param {*} name
  */
-function CreateScripts(relation_name, name) {
+function CreateScripts(relation_name, name, relation) {
   var field_name = relation_name + ".js";
   var fs = new FS("script");
   var form_dsl = `function GetSelect() {
     var query = new Query();
     var res = query.Get({
       select: ["id as value", "${name} as label"],
-      from: "${relation_name}",
+      from: "${relation.model}",
     });
     return res;
   }
