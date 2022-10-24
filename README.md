@@ -1,3 +1,7 @@
+# 配置好数据库链接后,运行命令: yao studio run model.Create
+
+# ==============================================================
+
 # 使用 Yao Studio 来构建 Admin 后台
 
 Yao Studio 是[0.10.2 版本](https://release-sv-1252011659.cos.na-siliconvalley.myqcloud.com/archives/yao-0.10.2-linux-amd64)新增的一个功能，该功能主要分为三个部分：[连接器](https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Connector)，模型构造器,表格构造器。可以让你连接任意数据库后，一键生成数据表格和模型菜单，减少 80%的工作量。
