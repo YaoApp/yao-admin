@@ -1,33 +1,57 @@
 function Create(model_dsl) {
-  Process("models.xiang.menu.DestroyWhere", {
-    wheres: [{ column: "id", op: "ne", value: 0 }],
-  });
-  var columns = [
-    "name",
-    "path",
-    "icon",
-    "rank",
-    "status",
-    "parent",
-    "visible_menu",
-    "blocks",
-  ];
+  // Process("models.xiang.menu.DestroyWhere", {
+  //   wheres: [{ column: "id", op: "ne", value: 0 }],
+  // });
+  // var columns = [
+  //   "name",
+  //   "path",
+  //   "icon",
+  //   "rank",
+  //   "status",
+  //   "parent",
+  //   "visible_menu",
+  //   "blocks",
+  // ];
   var insert = [];
+  insert.push({
+    blocks: 0,
+    icon: "icon-activity",
+    id: 1,
+    name: "图表",
+    parent: null,
+    path: "/x/Chart/dashboard",
+    visible_menu: 0,
+  });
   for (var i in model_dsl) {
     var name = model_dsl[i]["table"]["name"];
     var icon = GetIcon(name);
-    insert[i] = [
-      model_dsl[i].name,
-      "/x/Table/" + name,
-      icon,
-      i + 1,
-      "enabled",
-      null,
-      0,
-      0,
-    ];
+    insert.push({
+      name: model_dsl[i].name,
+      path: "/x/Table/" + name,
+      icon: icon,
+      rank: i + 1,
+      status: "enabled",
+      parent: null,
+      visible_menu: 0,
+      blocks: 0,
+      id: (i + 1) * 10,
+      model: name,
+    });
   }
-  Process("models.xiang.menu.insert", columns, insert);
+  Studio("move.Mkdir", "flows/app");
+  var fs = new FS("dsl");
+  var dsl = {
+    name: "APP Menu",
+    nodes: [],
+    output: insert,
+  };
+  var dsl = JSON.stringify(dsl);
+  fs.WriteFile("/flows/app/menu.flow.json", dsl);
+
+  // 创建看板
+  Studio("dashboard.Create", insert);
+
+  //Process("models.xiang.menu.insert", columns, insert);
 }
 
 /**yao studio run menu.icon user

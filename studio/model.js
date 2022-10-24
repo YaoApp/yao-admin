@@ -70,9 +70,9 @@ function version10_0_2() {
 }
 function login() {
   var fs = new FS("dsl");
-  var menu = Process("models.xiang.menu.get", {
-    limit: 1,
-  });
+  // var menu = Process("models.xiang.menu.get", {
+  //   limit: 1,
+  // });
   var table_name = "admin.login.json";
   var table = JSON.stringify({
     name: "::Admin Login",
@@ -81,7 +81,7 @@ function login() {
       args: [":payload"],
     },
     layout: {
-      entry: menu[0]["path"],
+      entry: "/x/Chart/dashboard",
       captcha: "yao.utils.Captcha",
       cover: "/assets/images/login/cover.svg",
       slogan: "::Make Your Dream With Yao App Engine",

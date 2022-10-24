@@ -193,7 +193,7 @@ function castTableColumn(column, model_dsl) {
 function Enum(option) {
   var res = [];
   for (var i in option) {
-    res.push({ label: option[i], value: option[i] });
+    res.push({ label: "::" + option[i], value: option[i] });
   }
   return res;
 }

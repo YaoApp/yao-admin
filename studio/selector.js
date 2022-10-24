@@ -87,8 +87,9 @@ function Withs(component, relation_name) {
 function Table(form_dsl, model_dsl) {
   var relation = model_dsl.relations;
   for (var i in relation) {
+    var translate = Studio("relation.translate", i);
     if (relation[i].type == "hasMany") {
-      form_dsl.fields.form["表格" + i] = {
+      form_dsl.fields.form["表格" + translate] = {
         bind: "id",
         edit: {
           type: "Table",
@@ -99,9 +100,9 @@ function Table(form_dsl, model_dsl) {
         },
       };
       form_dsl.layout.form.sections.push({
-        title: "表格" + i + "信息",
-        desc: "表格" + i + "信息",
-        columns: [{ name: "表格" + i, width: 24 }],
+        title: "表格" + translate + "信息",
+        desc: "表格" + translate + "信息",
+        columns: [{ name: "表格" + translate, width: 24 }],
       });
     }
   }

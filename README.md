@@ -1,5 +1,7 @@
 # 配置好数据库链接后,运行命令: yao studio run model.Create
 
+运行:yao start --disable-watching
+
 # ==============================================================
 
 # 使用 Yao Studio 来构建 Admin 后台
