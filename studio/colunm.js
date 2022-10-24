@@ -33,6 +33,7 @@ function toTable(model_dsl) {
     action: {
       bind: {
         model: model_dsl.table.name,
+        option: { withs: {} },
       },
     },
     layout: {
@@ -94,9 +95,14 @@ function toTable(model_dsl) {
       col.layout.table.columns.forEach((tc) => {
         tableTemplate.layout.table.columns.push(tc);
       });
-      col.fields.table.forEach(
-        (c) => (tableTemplate.fields.table[c.name] = c.component)
-      );
+      col.fields.table.forEach((c) => {
+        var cop = c.component.withs || [];
+        cop.forEach((fct) => {
+          tableTemplate.action.bind.option.withs[fct.name] = {};
+        });
+        delete c.component.withs;
+        tableTemplate.fields.table[c.name] = c.component;
+      });
 
       // col.fields.filter.forEach((ff) => {});
     }
@@ -199,6 +205,7 @@ function toForm(model_dsl) {
     action: {
       bind: {
         model: model_dsl.table.name,
+        option: { withs: {} },
       },
     },
     layout: {
@@ -234,8 +241,14 @@ function toForm(model_dsl) {
         tableTemplate.layout.form.sections[0].columns.push(tc);
       });
       col.fields.forEach((ft) => {
+        var cop = ft.component.withs || [];
+        cop.forEach((fct) => {
+          tableTemplate.action.bind.option.withs[fct.name] = {};
+        });
+        delete ft.component.withs;
         tableTemplate.fields.form[ft.name] = ft.component;
       });
+
       // col.fields.filter.forEach((ff) => {});
     }
   });

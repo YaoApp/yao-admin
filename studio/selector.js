@@ -14,21 +14,24 @@ function Select(column, model_dsl, component) {
   var relation = model_dsl.relations;
   for (var i in relation) {
     if (relation[i].type == "hasOne" && column.name == relation[i]["foreign"]) {
+      var field = Studio("remote.select", i);
       var component = {
-        bind: bind,
+        bind: i + "." + field,
         view: { props: {}, type: "Text" },
         edit: {
           type: "Select",
           props: {
             xProps: {
               $remote: {
-                process: "models." + relation[i]["model"] + ".Get",
+                process: "scripts." + i + ".GetSelect",
+                // process: "models." + relation[i]["model"] + ".Get",
                 query: {},
               },
             },
           },
         },
       };
+      component = Withs(component, i);
       return component;
     }
   }
@@ -44,6 +47,7 @@ function EditSelect(column, model_dsl, component) {
   var relation = model_dsl.relations;
   for (var i in relation) {
     if (relation[i].type == "hasOne" && column.name == relation[i]["foreign"]) {
+      var field = Studio("remote.select", i);
       var component = {
         bind: bind,
         edit: {
@@ -51,16 +55,29 @@ function EditSelect(column, model_dsl, component) {
           props: {
             xProps: {
               $remote: {
-                process: "models." + relation[i]["model"] + ".Get",
+                process: "scripts." + i + ".GetSelect",
+                // process: "models." + relation[i]["model"] + ".Get",
                 query: {},
               },
             },
           },
         },
       };
+      component = Withs(component, i);
       return component;
     }
   }
+  return component;
+}
+
+function Withs(component, relation_name) {
+  // "option": { "withs": { "user": {} } }
+
+  var withs = [];
+  withs.push({
+    name: relation_name,
+  });
+  component.withs = withs;
   return component;
 }
 
