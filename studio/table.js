@@ -19,6 +19,5 @@ function Create(model_dsl) {
     Studio("move.Move", "forms", form_name);
     fs.WriteFile("/forms/" + form_name, form);
   }
-  // 创建菜单
-  Studio("menu.Create", model_dsl);
+  
 }

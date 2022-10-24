@@ -16,35 +16,30 @@ function Create() {
   Studio("table.Create", model_dsl);
   version10_0_2();
   login();
+  // 创建菜单
+  Studio("menu.Create", model_dsl);
 }
 
-/**
- * 写入10.1版本的
- */
-function version10_0_1() {
+//创建单个表格的studio
+///yao studio run model.CreateOne address
+function CreateOne(model_name) {
+  console.log("进入studio");
+  console.log(model_name);
   var fs = new FS("dsl");
-  var menu = Process("models.xiang.menu.get", {
-    limit: 1,
-  });
-  fs.WriteFile(
-    "app.json",
-    JSON.stringify({
-      name: "Yao",
-      short: "Yao",
-      description: "Another yao app",
-      option: {
-        nav_user: "xiang.user",
-        nav_menu: "xiang.menu",
-        hide_user: false,
-        hide_menu: false,
-        login: {
-          entry: {
-            admin: menu[0]["path"],
-          },
-        },
-      },
-    })
-  );
+  var model_dsl = [];
+
+  model_dsl.push(JSON.parse(fs.ReadFile("models/" + model_name + ".mod.json")));
+
+  for (var i in model_dsl) {
+    var table_name = model_dsl[i]["table"]["name"] + ".mod.json";
+    var table = JSON.stringify(model_dsl[i]);
+    Studio("move.Move", "models", table_name);
+    fs.WriteFile("/models/" + table_name, table);
+  }
+  // 创建表格dsl
+  Studio("table.Create", model_dsl);
+  //version10_0_2();
+  //login();
 }
 
 /**

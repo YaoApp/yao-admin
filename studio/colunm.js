@@ -212,7 +212,18 @@ function toForm(model_dsl) {
       primary: "id",
       operation: {
         preset: { back: {}, save: { back: true } },
-        actions: [],
+        actions: [
+          {
+            title: "测试Studio",
+            icon: "icon-layers",
+            action: {
+              "Studio.model": {
+                method: "CreateOne",
+                args: [model_dsl.table.name],
+              },
+            },
+          },
+        ],
       },
       form: {
         props: {},
