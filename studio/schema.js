@@ -34,6 +34,19 @@ function Relation() {
 
     var col = GetTable(all_table[i]);
 
+    for (var j in col.columns) {
+      if (!col.columns[j]["label"]) {
+        col.columns[j]["label"] = Studio(
+          "relation.translate",
+          col.columns[j]["name"]
+        );
+      }
+      col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
+      if (col.columns[j]["type"] == "dateTime") {
+        col.columns[j]["type"] = "datetime";
+      }
+    }
+
     col.name = Studio("relation.translate", all_table[i]);
     col.decription = col.name;
     col.table = {};
@@ -49,4 +62,18 @@ function Relation() {
   table_arr = Studio("relation.other", table_arr);
 
   return table_arr;
+}
+
+function FieldHandle(label) {
+  if (label.length >= 8) {
+    var label = label.split(";")[0];
+    var label = label.split("；")[0];
+    var label = label.split("，")[0];
+    var label = label.split(";")[0];
+    var label = label.split("。")[0];
+    var label = label.split(":")[0];
+    var label = label.split("：")[0];
+  }
+
+  return label;
 }
