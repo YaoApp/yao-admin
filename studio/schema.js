@@ -45,6 +45,9 @@ function Relation() {
       if (col.columns[j]["type"] == "dateTime") {
         col.columns[j]["type"] = "datetime";
       }
+      if (col.columns[j]["type"] == "BIT" || col.columns[j]["type"] == "bit") {
+        col.columns[j]["type"] = "boolean";
+      }
     }
 
     col.name = Studio("relation.translate", all_table[i]);
@@ -73,6 +76,8 @@ function FieldHandle(label) {
     var label = label.split("。")[0];
     var label = label.split(":")[0];
     var label = label.split("：")[0];
+    var label = label.split(",")[0];
+    var label = label.split("，")[0];
   }
 
   return label;
