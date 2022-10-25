@@ -1,10 +1,11 @@
-# 配置好数据库链接后,运行命令: yao studio run model.Create
+# 使用方法:
 
-运行:yao start --disable-watching
+数据库连接上后,执行`yao migrate`,然后运行命令 `yao studio run model.Create `
+运行:`yao start --disable-watching`
 
-# ==============================================================
+<br>
 
-# 使用 Yao Studio 来构建 Admin 后台
+# 教程使用 Yao Studio 来构建 Admin 后台
 
 Yao Studio 是[0.10.2 版本](https://release-sv-1252011659.cos.na-siliconvalley.myqcloud.com/archives/yao-0.10.2-linux-amd64)新增的一个功能，该功能主要分为三个部分：[连接器](https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Connector)，模型构造器,表格构造器。可以让你连接任意数据库后，一键生成数据表格和模型菜单，减少 80%的工作量。
 源码地址：https://github.com/YaoApp/yao-admin
@@ -40,6 +41,10 @@ Yao Studio 是[0.10.2 版本](https://release-sv-1252011659.cos.na-siliconvalley
 ## 第二步：增加模型构造器，新建文件`/studio/model.js`，有关 Studio 的功能操作要全部写在 studio 文件夹下
 
 ```javascript
+//yao studio run model.Create
+/**
+ * 创建模型
+ */
 function Create() {
   var model_dsl = Studio("schema.Relation");
 
@@ -52,35 +57,79 @@ function Create() {
   }
   // 创建表格dsl
   Studio("table.Create", model_dsl);
-  version10_0_1();
+  version10_0_2();
+  login();
+  // 创建菜单
+  Studio("menu.Create", model_dsl);
 }
-/**
- * 写入10.1版本的app.json配置
- */
-function version10_0_1() {
+
+//创建单个表格的studio
+///yao studio run model.CreateOne address
+function CreateOne(model_name) {
+  console.log("进入studio");
+  console.log(model_name);
   var fs = new FS("dsl");
-  var menu = Process("models.xiang.menu.get", {
-    limit: 1,
-  });
+  var model_dsl = [];
+
+  model_dsl.push(JSON.parse(fs.ReadFile("models/" + model_name + ".mod.json")));
+
+  for (var i in model_dsl) {
+    var table_name = model_dsl[i]["table"]["name"] + ".mod.json";
+    var table = JSON.stringify(model_dsl[i]);
+    Studio("move.Move", "models", table_name);
+    fs.WriteFile("/models/" + table_name, table);
+  }
+  // 创建表格dsl
+  Studio("table.Create", model_dsl);
+  //version10_0_2();
+  //login();
+}
+
+/**
+ * 写入10.2版本的
+ */
+function version10_0_2() {
+  var fs = new FS("dsl");
+
   fs.WriteFile(
     "app.json",
     JSON.stringify({
-      name: "Yao",
-      short: "Yao",
-      description: "Another yao app",
-      option: {
-        nav_user: "xiang.user",
-        nav_menu: "xiang.menu",
-        hide_user: false,
-        hide_menu: false,
-        login: {
-          entry: {
-            admin: menu[0]["path"],
-          },
-        },
+      xgen: "1.0",
+      name: "::Demo Application",
+      short: "::Demo",
+      description: "::Another yao application",
+      version: "0.10.2",
+      menu: {
+        process: "flows.app.menu",
+        args: ["demo"],
+      },
+      adminRoot: "yao",
+      optional: {
+        hideNotification: true,
+        hideSetting: false,
       },
     })
   );
+}
+function login() {
+  var fs = new FS("dsl");
+  var table_name = "admin.login.json";
+  var table = JSON.stringify({
+    name: "::Admin Login",
+    action: {
+      process: "yao.login.Admin",
+      args: [":payload"],
+    },
+    layout: {
+      entry: "/x/Chart/dashboard",
+      captcha: "yao.utils.Captcha",
+      cover: "/assets/images/login/cover.svg",
+      slogan: "::Make Your Dream With Yao App Engine",
+      site: "https://yaoapps.com",
+    },
+  });
+  Studio("move.Move", "logins", table_name);
+  fs.WriteFile("/logins/" + table_name, table);
 }
 ```
 
@@ -99,7 +148,7 @@ function version10_0_1() {
 schema.js文件内容
 
 ```javascript
-/**
+/**yao studio run schema.GetTable role
  * 获取单个表字段
  * @param {*} name
  * @returns
@@ -125,18 +174,28 @@ function Relation() {
   var all_table = GetTableName();
   var table_arr = [];
 
-  //去除系统自带的表
+  // 不需要的表格白名单
+  var guards = ["xiang_menu", "xiang_user", "xiang_workflow", "pet"];
+
   for (var i in all_table) {
-    if (
-      all_table[i] == "xiang_menu" ||
-      all_table[i] == "xiang_user" ||
-      all_table[i] == "xiang_workflow" ||
-      all_table[i] == "pet"
-    ) {
+    if (guards.indexOf(all_table[i]) != -1) {
       continue;
     }
 
     var col = GetTable(all_table[i]);
+
+    for (var j in col.columns) {
+      if (!col.columns[j]["label"]) {
+        col.columns[j]["label"] = Studio(
+          "relation.translate",
+          col.columns[j]["name"]
+        );
+      }
+      col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
+      if (col.columns[j]["type"] == "dateTime") {
+        col.columns[j]["type"] = "datetime";
+      }
+    }
 
     col.name = Studio("relation.translate", all_table[i]);
     col.decription = col.name;
@@ -153,6 +212,20 @@ function Relation() {
   table_arr = Studio("relation.other", table_arr);
 
   return table_arr;
+}
+
+function FieldHandle(label) {
+  if (label.length >= 8) {
+    var label = label.split(";")[0];
+    var label = label.split("；")[0];
+    var label = label.split("，")[0];
+    var label = label.split(";")[0];
+    var label = label.split("。")[0];
+    var label = label.split(":")[0];
+    var label = label.split("：")[0];
+  }
+
+  return label;
 }
 ```
 
@@ -215,15 +288,16 @@ function child(model_name, columns, table_struct) {
 function other(all_table_struct) {
   for (var i in all_table_struct) {
     var temp = all_table_struct[i]["columns"];
-
+    all_table_struct = Studio(
+      "hasone.hasOne",
+      all_table_struct[i]["table"]["name"],
+      all_table_struct
+    );
     for (var j in temp) {
-      all_table_struct = hasOne(
+      all_table_struct = Studio(
+        "hasmany.hasMany",
         all_table_struct[i]["table"]["name"],
-        all_table_struct
-      );
-      all_table_struct = hasMany(
-        all_table_struct[i]["table"]["name"],
-        temp[j]["name"],
+        temp[j].name,
         all_table_struct
       );
     }
@@ -231,47 +305,7 @@ function other(all_table_struct) {
   return all_table_struct;
 }
 
-function hasMany(table_name, field_name, all_table) {
-  // 判断hasMany
-  // 如果包含下划线+id,说明他有可能是别的表的外键
-  if (field_name.indexOf("_id") != -1) {
-    for (var i in all_table) {
-      var target = field_name.replace("_id", "");
-
-      if (target == all_table[i]["table"]["name"]) {
-        all_table[i]["relations"][table_name] = {
-          type: "hasMany",
-          model: table_name,
-          key: field_name,
-          foreign: "id",
-          query: {},
-        };
-      }
-    }
-  }
-  return all_table;
-}
-function hasOne(table_name, all_table) {
-  // 先判断hasOne
-  var foreign_id = table_name + "_id";
-  for (var i in all_table) {
-    var temp_column = all_table[i]["columns"];
-    for (var j in temp_column) {
-      if (temp_column[j]["name"] == foreign_id) {
-        all_table[i]["relations"][table_name] = {
-          type: "hasOne",
-          model: table_name,
-          key: "id",
-          foreign: foreign_id,
-          query: {},
-        };
-      }
-    }
-  }
-  return all_table;
-}
-
-//获取菜单图标接口: yao studio run relation.translate icon
+// yao studio run relation.translate icon
 function translate(keywords) {
   var url = "https://brain.yaoapps.com/api/keyword/column";
   let response = Process(
@@ -330,7 +364,7 @@ function Copy(from, to, name) {
   fs.Copy(from, to + "/" + name);
 }
 /**
- * 查看文件是否存在
+ * 查看模型是否存在
  * @param {*} file_name
  * @returns
  */
@@ -345,6 +379,7 @@ function Exists(dir, file_name) {
 ## 第三步：增加表格构造器，新建文件`/studio/table.js`
 
 ```javascript
+//yao studio run table.Create
 /**
  * 创建表格
  */
@@ -352,147 +387,19 @@ function Create(model_dsl) {
   var fs = new FS("dsl");
   for (var i in model_dsl) {
     var table_name = model_dsl[i]["table"]["name"] + ".tab.json";
-    var dsl = toTable(model_dsl[i]);
+    //var dsl = toTable(model_dsl[i]);
+    var dsl = Studio("colunm.toTable", model_dsl[i]);
     var table = JSON.stringify(dsl);
     Studio("move.Move", "tables", table_name);
     fs.WriteFile("/tables/" + table_name, table);
+
+    ///
+    var form_name = model_dsl[i]["table"]["name"] + ".form.json";
+    var form_dsl = Studio("colunm.toForm", model_dsl[i]);
+    var form = JSON.stringify(form_dsl);
+    Studio("move.Move", "forms", form_name);
+    fs.WriteFile("/forms/" + form_name, form);
   }
-  // 创建菜单
-  Studio("menu.Create", model_dsl);
-}
-
-function toTable(model_dsl) {
-  const columns = model_dsl.columns || [];
-  var tableTemplate = {
-    name: model_dsl.name || "表格",
-    version: "1.0.0",
-    decription: model_dsl.decription || "表格",
-    bind: { model: model_dsl.table.name },
-    columns: {},
-    filters: {},
-    list: {
-      primary: "id",
-      layout: { columns: [], filters: [] },
-      actions: {
-        pagination: { props: { showTotal: true } },
-        create: { props: { label: "添加" } },
-      },
-      option: { operation: { unfold: true } },
-    },
-    edit: {
-      primary: "id",
-      layout: {
-        fieldset: [{ columns: [] }],
-      },
-      actions: {
-        cancel: {},
-        save: {},
-        delete: { type: "button", props: { label: "删除" } },
-      },
-      option: { dev: true },
-    },
-  };
-  columns.forEach((column) => {
-    var col = castTableColumn(column);
-    if (col) {
-      col.columns.forEach((c) => (tableTemplate.columns[c.name] = c.component));
-      col.filters.forEach((f) => (tableTemplate.filters[f.name] = f.filter));
-      col.edit.forEach((c) =>
-        tableTemplate.edit.layout.fieldset[0].columns.push(c)
-      );
-      col.list.columns.forEach((c) =>
-        tableTemplate.list.layout.columns.push(c)
-      );
-      col.list.filters.forEach((f) =>
-        tableTemplate.list.layout.filters.push(f)
-      );
-    }
-  });
-  return tableTemplate;
-}
-function castTableColumn(column) {
-  column = column || {};
-  const props = column.props || {};
-  const title = column.label;
-  const name = column.name;
-
-  const bind = `:${name}`;
-  if (!name) {
-    log.Error("castTableColumn: missing name");
-    return false;
-  }
-
-  if (!title) {
-    log.Error("castTableColumn: missing title");
-    return false;
-  }
-
-  var res = {
-    columns: [],
-    filters: [],
-    list: { columns: [], filters: [] },
-    edit: [],
-  };
-
-  var component = {
-    label: title,
-    view: { type: "label", props: { value: `:${name}` } },
-    edit: {},
-  };
-
-  switch (column.type) {
-    case "string":
-      component.edit = { type: "input", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    case "text":
-      component.edit = { type: "textArea", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    case "integer":
-      component.edit = { type: "input", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    case "decimal":
-      component.edit = { type: "input", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    case "datetime":
-      component.edit = { type: "datePicker", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    case "enum":
-      component.edit = { type: "select", props: { value: bind } };
-      res.list.columns.push({ name: title });
-      res.edit.push({ name: title, width: 24 });
-      break;
-    default:
-      log.Error("castTableColumn: Type %s does not support", column.type);
-      return false;
-  }
-
-  res.columns.push({ name: title, component: component });
-
-  // Convert to filter based on DSL description
-  if (column.search) {
-    var filter = {
-      label: title,
-      bind: `where.${name}.match`,
-      input: {
-        type: "input",
-        props: { placeholder: props.placeholder || `type ${title}...` },
-      },
-    };
-    res.filters.push({ name: title, filter: filter });
-    res.list.filters.push({ name: title });
-  }
-
-  return res;
 }
 ```
 
@@ -500,35 +407,59 @@ function castTableColumn(column) {
 
 ```javascript
 function Create(model_dsl) {
-  Process("models.xiang.menu.DestroyWhere", {
-    wheres: [{ column: "id", op: "ne", value: 0 }],
-  });
-  var columns = [
-    "name",
-    "path",
-    "icon",
-    "rank",
-    "status",
-    "parent",
-    "visible_menu",
-    "blocks",
-  ];
+  // Process("models.xiang.menu.DestroyWhere", {
+  //   wheres: [{ column: "id", op: "ne", value: 0 }],
+  // });
+  // var columns = [
+  //   "name",
+  //   "path",
+  //   "icon",
+  //   "rank",
+  //   "status",
+  //   "parent",
+  //   "visible_menu",
+  //   "blocks",
+  // ];
   var insert = [];
+  insert.push({
+    blocks: 0,
+    icon: "icon-activity",
+    id: 1,
+    name: "图表",
+    parent: null,
+    path: "/x/Chart/dashboard",
+    visible_menu: 0,
+  });
   for (var i in model_dsl) {
     var name = model_dsl[i]["table"]["name"];
     var icon = GetIcon(name);
-    insert[i] = [
-      model_dsl[i].name,
-      "/table/" + name,
-      icon,
-      i + 1,
-      "enabled",
-      null,
-      0,
-      0,
-    ];
+    insert.push({
+      name: model_dsl[i].name,
+      path: "/x/Table/" + name,
+      icon: icon,
+      rank: i + 1,
+      status: "enabled",
+      parent: null,
+      visible_menu: 0,
+      blocks: 0,
+      id: (i + 1) * 10,
+      model: name,
+    });
   }
-  Process("models.xiang.menu.insert", columns, insert);
+  Studio("move.Mkdir", "flows/app");
+  var fs = new FS("dsl");
+  var dsl = {
+    name: "APP Menu",
+    nodes: [],
+    output: insert,
+  };
+  var dsl = JSON.stringify(dsl);
+  fs.WriteFile("/flows/app/menu.flow.json", dsl);
+
+  // 创建看板
+  Studio("dashboard.Create", insert);
+
+  //Process("models.xiang.menu.insert", columns, insert);
 }
 
 /**yao studio run menu.icon user
