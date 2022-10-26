@@ -26,6 +26,7 @@ function Relation() {
 
   // 不需要的表格白名单
   var guards = ["xiang_menu", "xiang_user", "xiang_workflow", "pet"];
+  var prefix = TablePrefix(all_table);
 
   for (var i in all_table) {
     if (guards.indexOf(all_table[i]) != -1) {
@@ -48,9 +49,18 @@ function Relation() {
       if (col.columns[j]["type"] == "BIT" || col.columns[j]["type"] == "bit") {
         col.columns[j]["type"] = "boolean";
       }
+      if (
+        col.columns[j]["type"] == "MEDIUMINT" ||
+        col.columns[j]["type"] == "mediumint"
+      ) {
+        col.columns[j]["type"] = "tinyInteger";
+      }
     }
 
-    col.name = Studio("relation.translate", all_table[i]);
+    // 去除表前缀
+    var trans = ReplacePrefix(prefix, all_table[i]);
+
+    col.name = Studio("relation.translate", trans);
     col.decription = col.name;
     col.table = {};
     col.table.name = all_table[i];
@@ -81,4 +91,29 @@ function FieldHandle(label) {
   }
 
   return label;
+}
+//yao studio run schema.TablePrefix
+function TablePrefix(all_table_name) {
+  if (!all_table_name.length) {
+    var all_table_name = GetTableName();
+  }
+  var prefix = [];
+  for (var i in all_table_name) {
+    var temp = all_table_name[i].split("_");
+    // 如果表格下划线有3个以上,有可能有表前缀
+    if (temp.length >= 4 && prefix.indexOf(temp[0]) == -1) {
+      prefix.push(temp[0]);
+    }
+  }
+  return prefix;
+}
+
+function ReplacePrefix(prefix, target) {
+  if (prefix.length) {
+    for (var i in prefix) {
+      target = target.replace(prefix[i] + "_", "");
+      return target;
+    }
+  }
+  return target;
 }
