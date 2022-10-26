@@ -101,7 +101,7 @@ function TablePrefix(all_table_name) {
   for (var i in all_table_name) {
     var temp = all_table_name[i].split("_");
     // 如果表格下划线有3个以上,有可能有表前缀
-    if (temp.length >= 4 && prefix.indexOf(temp[0]) == -1) {
+    if (temp.length >= 3 && prefix.indexOf(temp[0]) == -1) {
       prefix.push(temp[0]);
     }
   }

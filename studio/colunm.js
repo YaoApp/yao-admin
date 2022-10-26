@@ -26,6 +26,16 @@ function getType() {
     enum: "Select",
   };
 }
+function Hidden(type) {
+  if (type == 1) {
+    // 不展示的名单列表
+    var hidden = ["password", "del", "delete", "deleted", "deleted_at", "pwd"];
+  } else {
+    var hidden = ["del", "delete", "deleted", "deleted_at"];
+  }
+
+  return hidden;
+}
 function toTable(model_dsl) {
   const columns = model_dsl.columns || [];
   var tableTemplate = {
@@ -120,6 +130,12 @@ function castTableColumn(column, model_dsl) {
   const props = column.props || {};
   const title = column.label;
   const name = column.name;
+
+  // 不展示隐藏列
+  var hidden = Hidden(1);
+  if (hidden.indexOf(name) != -1) {
+    return false;
+  }
   var types = getType();
 
   const bind = `${name}`;

@@ -73,19 +73,24 @@ function other(all_table_struct) {
 
 // yao studio run relation.translate icon
 function translate(keywords) {
+  var keywords = keywords.split("_");
+  //console.log(keywords);
   var url = "https://brain.yaoapps.com/api/keyword/column";
   let response = Process(
     "xiang.network.PostJSON",
     url,
     {
-      keyword: [keywords],
+      keyword: keywords,
     },
     {}
   );
   var res = keywords;
   if (response.status == 200) {
     if (response.data.data) {
-      var res = response.data.data[0]["label"];
+      var res = "";
+      for (var i in response.data.data) {
+        var res = res + response.data.data[i]["label"];
+      }
     }
   }
   return res;
