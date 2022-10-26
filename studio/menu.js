@@ -1,17 +1,4 @@
 function Create(model_dsl) {
-  // Process("models.xiang.menu.DestroyWhere", {
-  //   wheres: [{ column: "id", op: "ne", value: 0 }],
-  // });
-  // var columns = [
-  //   "name",
-  //   "path",
-  //   "icon",
-  //   "rank",
-  //   "status",
-  //   "parent",
-  //   "visible_menu",
-  //   "blocks",
-  // ];
   var insert = [];
   insert.push({
     blocks: 0,
