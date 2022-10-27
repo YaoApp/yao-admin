@@ -23,8 +23,8 @@ function Create() {
 //创建单个表格的studio
 ///yao studio run model.CreateOne address
 function CreateOne(model_name) {
-  console.log("进入studio");
-  console.log(model_name);
+ // console.log("进入studio");
+  //console.log(model_name);
   var fs = new FS("dsl");
   var model_dsl = [];
 

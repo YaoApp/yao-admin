@@ -50,6 +50,7 @@ function EditSelect(column, model_dsl, component) {
       var field = Studio("remote.select", i, relation[i]);
       var component = {
         bind: bind,
+        view: { props: {}, type: "Text" },
         edit: {
           type: "Select",
           props: {

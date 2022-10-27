@@ -34,14 +34,17 @@ function Relation() {
     }
 
     var col = GetTable(all_table[i]);
+    col.columns = Studio("relation.BatchTranslate", col.columns);
+    // console.log(col.columns);
+    // return;
 
     for (var j in col.columns) {
-      if (!col.columns[j]["label"]) {
-        col.columns[j]["label"] = Studio(
-          "relation.translate",
-          col.columns[j]["name"]
-        );
-      }
+      // if (!col.columns[j]["label"]) {
+      //   col.columns[j]["label"] = Studio(
+      //     "relation.translate",
+      //     col.columns[j]["name"]
+      //   );
+      // }
       col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
       if (col.columns[j]["type"] == "dateTime") {
         col.columns[j]["type"] = "datetime";
@@ -94,7 +97,7 @@ function FieldHandle(label) {
 }
 //yao studio run schema.TablePrefix
 function TablePrefix(all_table_name) {
-  if (!all_table_name.length) {
+  if (!all_table_name || !all_table_name.length) {
     var all_table_name = GetTableName();
   }
   var prefix = [];
@@ -108,11 +111,11 @@ function TablePrefix(all_table_name) {
   return prefix;
 }
 
+// 把表前缀替换掉
 function ReplacePrefix(prefix, target) {
   if (prefix.length) {
     for (var i in prefix) {
       target = target.replace(prefix[i] + "_", "");
-      return target;
     }
   }
   return target;

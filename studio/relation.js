@@ -73,6 +73,9 @@ function other(all_table_struct) {
 
 // yao studio run relation.translate icon
 function translate(keywords) {
+  if (keywords == "id" || keywords == "ID") {
+    return "id";
+  }
   var keywords = keywords.split("_");
   //console.log(keywords);
   var url = "https://brain.yaoapps.com/api/keyword/column";
@@ -91,6 +94,31 @@ function translate(keywords) {
       for (var i in response.data.data) {
         var res = res + response.data.data[i]["label"];
       }
+    }
+  }
+  return res;
+}
+
+/**
+ * 批量翻译
+ * @param {*} keywords
+ * @returns
+ */
+function BatchTranslate(keywords) {
+  var url = "https://brain.yaoapps.com/api/keyword/batch_column";
+  let response = Process(
+    "xiang.network.PostJSON",
+    url,
+    {
+      keyword: keywords,
+    },
+    {}
+  );
+  var res = keywords;
+  if (response.status == 200) {
+    if (response.data.data) {
+     // console.log(response.data.data);
+      return response.data.data;
     }
   }
   return res;

@@ -163,6 +163,12 @@ function castTableColumn(column, model_dsl) {
       props: {},
     },
   };
+  if (title.length > 5) {
+    var width = 250;
+  } else {
+    var width = 200;
+  }
+
   if (column["type"] == "json") {
     log.Error("castTableColumn: Type %s does not support", column.type);
     return false;
@@ -179,19 +185,23 @@ function castTableColumn(column, model_dsl) {
       },
       view: { props: {}, type: "Text" },
     };
+
     res.layout.table.columns.push({
       name: title,
+      width: width,
     });
   } else {
     if (column["type"] in types) {
       component.edit.type = types[column["type"]];
       res.layout.table.columns.push({
         name: title,
+        width: width,
       });
     }
   }
 
   component = Studio("selector.Select", column, model_dsl, component);
+  component = Studio("file.File", column, component);
 
   // component.edit = { type: "input", props: { value: bind } };
   // res.list.columns.push({ name: title });
@@ -314,8 +324,7 @@ function castFormColumn(column, model_dsl) {
   if (column["type"] == "json") {
     log.Error("castTableColumn: Type %s does not support", column.type);
     return false;
-  }
-  if (column["type"] == "enum") {
+  } else if (column["type"] == "enum") {
     var component = {
       bind: bind,
       edit: {
@@ -340,6 +349,7 @@ function castFormColumn(column, model_dsl) {
     }
   }
   component = Studio("selector.EditSelect", column, model_dsl, component);
+  component = Studio("file.FormFile", column, component);
 
   // component.edit = { type: "input", props: { value: bind } };
   // res.list.columns.push({ name: title });
