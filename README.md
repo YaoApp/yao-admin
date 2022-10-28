@@ -35,6 +35,20 @@ Yao Admin是使用 <a href="https://github.com/YaoApp/yao">Yao</a>构建的项�
 
 ### 5.源码可以自己修改。
 
-### 6.首页数据预览
+### 6.首页数据预览,能够统计数据表
 
-# 未完待续。。。。。。。。。。。。。。。。。。。。。。。。
+# 安装
+
+## step1:安装好 Yao 开发环境 [环境安装](https://yaoapps.com/doc/%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
+
+## step2:克隆本项目,配置好数据库连接后,然后在目录下执行 `yao migrate`
+
+## step3:执行命令生成表格模型数据 `yao studio run model.Create`
+
+## step4:运行 `yao start` 进入后台管理系统 `http://127.0.0.1:5099/yao/login/admin`
+
+![首页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/1666923331542.png)
+
+![登录后](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/1666923455896.png)
+
+![菜单](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/1666923632955.png)
