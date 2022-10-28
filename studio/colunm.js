@@ -140,12 +140,12 @@ function castTableColumn(column, model_dsl) {
 
   const bind = `${name}`;
   if (!name) {
-    log.Error("castTableColumn: missing name");
+    // log.Error("castTableColumn: missing name");
     return false;
   }
 
   if (!title) {
-    log.Error("castTableColumn: missing title");
+    //log.Error("castTableColumn: missing title");
     return false;
   }
 
@@ -170,7 +170,7 @@ function castTableColumn(column, model_dsl) {
   }
 
   if (column["type"] == "json") {
-    log.Error("castTableColumn: Type %s does not support", column.type);
+    // log.Error("castTableColumn: Type %s does not support", column.type);
     return false;
   }
   if (column["type"] == "enum") {
@@ -300,12 +300,12 @@ function castFormColumn(column, model_dsl) {
 
   const bind = `${name}`;
   if (!name) {
-    log.Error("castTableColumn: missing name");
+    //log.Error("castTableColumn: missing name");
     return false;
   }
 
   if (!title) {
-    log.Error("castTableColumn: missing title");
+    // log.Error("castTableColumn: missing title");
     return false;
   }
 
@@ -322,7 +322,7 @@ function castFormColumn(column, model_dsl) {
     },
   };
   if (column["type"] == "json") {
-    log.Error("castTableColumn: Type %s does not support", column.type);
+    // log.Error("castTableColumn: Type %s does not support", column.type);
     return false;
   } else if (column["type"] == "enum") {
     var component = {

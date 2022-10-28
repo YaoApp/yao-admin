@@ -10,6 +10,7 @@
       "demo"
     ]
   },
+  "setup": "studio.model.Create",
   "adminRoot": "yao",
   "optional": {
     "hideNotification": true,

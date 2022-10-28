@@ -23,7 +23,7 @@ function Create() {
 //创建单个表格的studio
 ///yao studio run model.CreateOne address
 function CreateOne(model_name) {
- // console.log("进入studio");
+  // console.log("进入studio");
   //console.log(model_name);
   var fs = new FS("dsl");
   var model_dsl = [];
@@ -60,6 +60,7 @@ function version10_0_2() {
         process: "flows.app.menu",
         args: ["demo"],
       },
+      setup: "studio.model.Create",
       adminRoot: "yao",
       optional: {
         hideNotification: true,
