@@ -6,12 +6,12 @@ const children = ["children", "children_id", "child", "child_id"];
  * @param {*} columns
  * @param {*} table_struct
  */
-function parent(model_name, columns, table_struct) {
+function child(model_name, columns, table_struct) {
   for (var i in columns) {
     if (columns[i]["type"] != "integer") {
       continue;
     }
-    if (parents.indexOf(columns[i]["name"]) != -1) {
+    if (children.indexOf(columns[i]["name"]) != -1) {
       table_struct.relations.children = {
         type: "hasMany",
         model: model_name,
@@ -32,12 +32,12 @@ function parent(model_name, columns, table_struct) {
  * @param {*} table_struct
  * @returns
  */
-function child(model_name, columns, table_struct) {
+function parent(model_name, columns, table_struct) {
   for (var i in columns) {
     if (columns[i]["type"] != "integer") {
       continue;
     }
-    if (children.indexOf(columns[i]["name"]) != -1) {
+    if (parents.indexOf(columns[i]["name"]) != -1) {
       table_struct.relations.parent = {
         type: "hasOne",
         model: model_name,
@@ -117,7 +117,7 @@ function BatchTranslate(keywords) {
   var res = keywords;
   if (response.status == 200) {
     if (response.data.data) {
-     // console.log(response.data.data);
+      // console.log(response.data.data);
       return response.data.data;
     }
   }

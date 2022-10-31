@@ -64,10 +64,11 @@ function CreateScripts(relation_name, name, relation) {
     return res;
   }
   `;
+  var dir = relation.model + "/" + field_name;
   //console.log(form_dsl);
 
   Studio("move.Move", "scripts", field_name);
-  fs.WriteFile("/" + field_name, form_dsl);
+  fs.WriteFile("/" + dir, form_dsl);
 }
 
 // function GetSelect() {

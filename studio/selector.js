@@ -23,7 +23,8 @@ function Select(column, model_dsl, component) {
           props: {
             xProps: {
               $remote: {
-                process: "scripts." + i + ".GetSelect",
+                process:
+                  "scripts." + relation[i].model + "." + i + ".GetSelect",
                 // process: "models." + relation[i]["model"] + ".Get",
                 query: {},
               },
@@ -56,7 +57,8 @@ function EditSelect(column, model_dsl, component) {
           props: {
             xProps: {
               $remote: {
-                process: "scripts." + i + ".GetSelect",
+                process:
+                  "scripts." + relation[i].model + "." + i + ".GetSelect",
                 // process: "models." + relation[i]["model"] + ".Get",
                 query: {},
               },
