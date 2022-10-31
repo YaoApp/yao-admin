@@ -12,6 +12,9 @@ function File(column, component) {
     "avatar",
     "Img",
     "logo",
+    "cover",
+    "url",
+    "gallery",
   ];
   const name = column.name;
   for (var i in guard) {
@@ -49,6 +52,9 @@ function FormFile(column, component) {
     "avatar",
     "Img",
     "logo",
+    "cover",
+    "url",
+    "gallery",
   ];
   const name = column.name;
   for (var i in guard) {

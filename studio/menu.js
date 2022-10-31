@@ -14,11 +14,11 @@ function Create(model_dsl) {
 
   for (var i in model_dsl) {
     var name = model_dsl[i]["table"]["name"];
-    var icon = GetIcon(name);
+
     var item = {
       name: model_dsl[i].name,
       path: "/x/Table/" + name,
-      icon: icon,
+      icon: "",
       rank: i + 1,
       status: "enabled",
       parent: null,
@@ -30,13 +30,17 @@ function Create(model_dsl) {
     };
     if (total >= 10) {
       item.visible_menu = 1;
-      child.push(item);
+      // child.push(item);
       if (i == 0) {
+        var icon = GetIcon(name);
+        item.icon = icon;
         insert[1] = item;
       } else {
         insert[1]["children"].push(item);
       }
     } else {
+      var icon = GetIcon(name);
+      item.icon = icon;
       insert.push(item);
     }
   }
