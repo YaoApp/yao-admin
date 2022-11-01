@@ -29,7 +29,7 @@ function File(column, component) {
         edit: {
           type: "Upload",
           //compute: "scripts.file.image.ImagesEdit",
-          props: { filetype: "image" },
+          props: { filetype: "image", disabled: true },
         },
       };
       return component;
@@ -39,7 +39,7 @@ function File(column, component) {
   return component;
 }
 
-function FormFile(column, component) {
+function FormFile(column, component, model_dsl) {
   var guard = [
     "img",
     "image",
@@ -69,6 +69,10 @@ function FormFile(column, component) {
         },
         edit: {
           type: "Upload",
+          compute: {
+            process: "scripts.file.image.ImagesEdit",
+            args: ["$C(row)", "$C(type)", name, model_dsl["table"]["name"]],
+          },
           // compute: "scripts.file.image.ImagesEdit",
           props: { filetype: "image" },
         },

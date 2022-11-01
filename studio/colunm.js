@@ -196,11 +196,14 @@ function castTableColumn(column, model_dsl) {
     var width = 200;
   }
 
+  // 如果是json的,去看看是不是图片文件
   if (column["type"] == "json") {
+    var component = Studio("file.File", column, false);
+    if (!component) {
+      return false;
+    }
     // log.Error("castTableColumn: Type %s does not support", column.type);
-    return false;
-  }
-  if (column["type"] == "enum") {
+  } else if (column["type"] == "enum") {
     var component = {
       bind: bind,
       edit: {
@@ -228,6 +231,7 @@ function castTableColumn(column, model_dsl) {
   }
 
   component = Studio("selector.Select", column, model_dsl, component);
+  // 如果是下拉的,则增加查询条件
   if (component.is_select) {
     var where_bind = "where." + name + ".in";
     res.fields.filter.push({
@@ -382,8 +386,11 @@ function castFormColumn(column, model_dsl) {
     },
   };
   if (column["type"] == "json") {
-    // log.Error("castTableColumn: Type %s does not support", column.type);
-    return false;
+    var component = Studio("file.FormFile", column, false, model_dsl);
+    if (!component) {
+      // log.Error("castTableColumn: Type %s does not support", column.type);
+      return false;
+    }
   } else if (column["type"] == "enum") {
     var component = {
       bind: bind,
@@ -402,7 +409,7 @@ function castFormColumn(column, model_dsl) {
   }
   var width = 8;
   component = Studio("selector.EditSelect", column, model_dsl, component);
-  component = Studio("file.FormFile", column, component);
+  component = Studio("file.FormFile", column, component, model_dsl);
   if (component["is_image"]) {
     var width = 24;
   }
