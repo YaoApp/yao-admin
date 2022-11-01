@@ -12,6 +12,7 @@ function ImagesView(data) {
 }
 
 function ImagesEdit(value, type, name, model_name) {
+  // console.log([value, type, name, model_name]);
   var dsl = Process("schemas.default.TableGet", model_name);
   for (var i in dsl.columns) {
     if (dsl["columns"][i]["name"] == name) {

@@ -123,3 +123,28 @@ function BatchTranslate(keywords) {
   }
   return res;
 }
+/**
+ * Model dsl全部翻译翻译
+ * @param {*} keywords
+ * @returns
+ */
+function BatchModel(keywords) {
+  var url = "https://brain.yaoapps.com/api/keyword/batch_model";
+  let response = Process(
+    "xiang.network.PostJSON",
+    url,
+    {
+      keyword: keywords,
+    },
+    {}
+  );
+
+  var res = keywords;
+  if (response.status == 200) {
+    if (response.data.data) {
+      // console.log(response.data.data);
+      return response.data.data;
+    }
+  }
+  return res;
+}
