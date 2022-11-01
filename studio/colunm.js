@@ -29,13 +29,35 @@ function getType() {
 function Hidden(type) {
   if (type == 1) {
     // 不展示的名单列表
-    var hidden = ["password", "del", "delete", "deleted", "deleted_at", "pwd"];
+    var hidden = [
+      "password",
+      "del",
+      "delete",
+      "deleted",
+      "deleted_at",
+      "pwd",
+      "deleted",
+    ];
   } else {
-    var hidden = ["del", "delete", "deleted", "deleted_at"];
+    var hidden = [
+      "del",
+      "delete",
+      "deleted",
+      "deleted_at",
+      "created_at",
+      "updated_at",
+      "id",
+      "ID",
+      "update_time",
+    ];
   }
 
   return hidden;
 }
+function filter() {
+  return ["name", "title", "_sn"];
+}
+
 function toTable(model_dsl) {
   const columns = model_dsl.columns || [];
   var tableTemplate = {
@@ -114,6 +136,11 @@ function toTable(model_dsl) {
         tableTemplate.fields.table[c.name] = c.component;
       });
 
+      col.fields.filter.forEach((ff) => {
+        tableTemplate.layout.filter.columns.push({ name: ff.name, width: 4 });
+        tableTemplate.fields.filter[ff.name] = ff.component;
+      });
+
       // col.fields.filter.forEach((ff) => {});
     }
 
@@ -151,7 +178,7 @@ function castTableColumn(column, model_dsl) {
 
   var res = {
     layout: { filter: { columns: [] }, table: { columns: [] } },
-    fields: { filter: {}, table: [] },
+    fields: { filter: [], table: [] },
   };
 
   var component = {
@@ -201,6 +228,33 @@ function castTableColumn(column, model_dsl) {
   }
 
   component = Studio("selector.Select", column, model_dsl, component);
+  if (component.is_select) {
+    var where_bind = "where." + name + ".in";
+    res.fields.filter.push({
+      name: title,
+      component: {
+        bind: where_bind,
+        edit: component.edit,
+      },
+    });
+  } else {
+    var filter_target = filter();
+    for (var f in filter_target) {
+      if (name.indexOf(filter_target[f]) != -1) {
+        res.fields.filter.push({
+          name: title,
+          component: {
+            bind: "where." + name + ".match",
+            edit: {
+              type: "Input",
+              compute: "Trim",
+              props: { placeholder: "请输入" + title },
+            },
+          },
+        });
+      }
+    }
+  }
   component = Studio("file.File", column, component);
 
   // component.edit = { type: "input", props: { value: bind } };
@@ -309,6 +363,12 @@ function castFormColumn(column, model_dsl) {
     return false;
   }
 
+  // 不展示隐藏列
+  var hidden = Hidden(2);
+  if (hidden.indexOf(name) != -1) {
+    return false;
+  }
+
   var res = {
     layout: [],
     fields: [],
@@ -335,22 +395,21 @@ function castFormColumn(column, model_dsl) {
         type: "Select",
       },
     };
-    res.layout.push({
-      name: title,
-      width: 8,
-    });
   } else {
     if (column["type"] in types) {
       component.edit.type = types[column["type"]];
-      res.layout.push({
-        name: title,
-        width: 8,
-      });
     }
   }
+  var width = 8;
   component = Studio("selector.EditSelect", column, model_dsl, component);
   component = Studio("file.FormFile", column, component);
-
+  if (component["is_image"]) {
+    var width = 24;
+  }
+  res.layout.push({
+    name: title,
+    width: width,
+  });
   // component.edit = { type: "input", props: { value: bind } };
   // res.list.columns.push({ name: title });
   // res.edit.push({ name: title, width: 24 });

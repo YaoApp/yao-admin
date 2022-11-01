@@ -60,6 +60,7 @@ function FormFile(column, component) {
   for (var i in guard) {
     if (name.indexOf(guard[i]) != -1) {
       var component = {
+        is_image: true,
         bind: name,
         view: {
           type: "Image",

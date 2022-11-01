@@ -16,6 +16,7 @@ function Select(column, model_dsl, component) {
     if (relation[i].type == "hasOne" && column.name == relation[i]["foreign"]) {
       var field = Studio("remote.select", i, relation[i]);
       var component = {
+        is_select: true,
         bind: i + "." + field,
         view: { props: {}, type: "Text" },
         edit: {

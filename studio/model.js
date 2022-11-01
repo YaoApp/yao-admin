@@ -83,10 +83,10 @@ function login() {
     },
     layout: {
       entry: "/x/Chart/dashboard",
-      captcha: "yao.utils.Captcha",
-      cover: "/assets/images/login/cover.svg",
+      // captcha: "yao.utils.Captcha",
+      //cover: "/assets/images/login/cover.svg",
       slogan: "::Make Your Dream With Yao App Engine",
-      site: "https://yaoapps.com",
+      site: "https://yaoapps.com?from=yao-admin",
     },
   });
   Studio("move.Move", "logins", table_name);
