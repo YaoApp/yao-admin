@@ -96,13 +96,18 @@ function WriteScript(data) {
 }
 
 function GetCount(model) {
-  var query = new Query();
-  var res = query.Get({
-    select: [":COUNT(id) as 数量"],
-    from: model,
-  });
-  if (res && res.length && res[0]["数量"] > 0) {
-    return res[0]["数量"];
+  try {
+    var query = new Query();
+    var res = query.Get({
+      select: [":COUNT(id) as 数量"],
+      from: model,
+    });
+    if (res && res.length && res[0]["数量"] > 0) {
+      return res[0]["数量"];
+    }
+  } catch (e) {
+    return 0;
   }
+
   return 0;
 }
