@@ -1,13 +1,18 @@
 # 使用方法:
 
-数据库连接上后,执行`yao migrate`,然后运行命令 `yao studio run model.Create `
-运行:`yao start --disable-watching`
+克隆项目后,执行 `yao start`,打开配置界面`http://127.0.0.1:5099`配置好数据库配置
+
+![配置界面](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E5%95%86%E5%9F%8E/1.png)
+
+![界面2](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E5%95%86%E5%9F%8E/2.png)
+
+等待数据表生成以后,就可以打开登录界面 `http://127.0.0.1:5099/yao/login/admin`输入默认用户名: `xiang@iqka.com`， 密码: `A123456p+`
 
 <br>
 
 # 教程：使用 Yao Studio 来构建 Admin 后台
 
-Yao Studio 是[0.10.2 版本](https://release-sv-1252011659.cos.na-siliconvalley.myqcloud.com/archives/yao-0.10.2-linux-amd64)新增的一个功能，该功能主要分为三个部分：[连接器](https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Connector)，模型构造器,表格构造器。可以让你连接任意数据库后，一键生成数据表格和模型菜单，减少 90%的工作量。
+Yao Studio 是[0.10.2 版本](https://release-sv-1252011659.cos.na-siliconvalley.myqcloud.com/archives/yao-0.10.2-linux-amd64)新增的一个功能，该功能主要分为三个部分：模型构造器,表格构造器,组件菜单构造器。可以让你连接任意数据库后，一键生成数据表格和模型菜单，减少 99%的工作量,实现真正的零代码。
 源码地址：https://github.com/YaoApp/yao-admin
 
 ## 效果预览图
@@ -54,7 +59,7 @@ studio 文件说明
 
 ## 第一步：配置数据库连接
 
-### 在`.env`文件中配置好数据库连接
+### 在`yao start`命令执行过后文件中配置好数据库连接,`.env`文件就会出现如下配置
 
 ```bash
 YAO_DB_AESKEY="KBPdcRn44LzykphsVM\*y"
@@ -660,4 +665,4 @@ function WriteScript() {
 }
 ```
 
-最后运行命令`yao studio run model.Create`,我们可以看到创建了不少的数据模型和表格,我们运行`yao start`访问一下`127.0.0.1:5099/xiang/admin/login`,输入默认用户名: `xiang@iqka.com`， 密码: `A123456p+`
+最后运行调试命令`yao studio run model.Create`,我们可以看到创建了不少的数据模型和表格,我们运行`yao start`访问一下`http://127.0.0.1:5099/yao/login/admin`,输入默认用户名: `xiang@iqka.com`， 密码: `A123456p+`
