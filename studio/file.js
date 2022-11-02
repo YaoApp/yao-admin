@@ -15,6 +15,7 @@ function File(column, component) {
     "cover",
     "url",
     "gallery",
+    "pic",
   ];
   const name = column.name;
   for (var i in guard) {
@@ -55,6 +56,7 @@ function FormFile(column, component, model_dsl) {
     "cover",
     "url",
     "gallery",
+    "pic",
   ];
   const name = column.name;
   for (var i in guard) {

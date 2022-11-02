@@ -34,12 +34,18 @@ function Relation() {
     }
 
     var col = GetTable(all_table[i]);
-    //col.columns = Studio("relation.BatchTranslate", col.columns);
+    col.columns = Studio("relation.BatchTranslate", col.columns);
     // console.log(col.columns);
     // return;
 
     for (var j in col.columns) {
-      // col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
+      // if (!col.columns[j]["label"]) {
+      //   col.columns[j]["label"] = Studio(
+      //     "relation.translate",
+      //     col.columns[j]["name"]
+      //   );
+      // }
+      col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
       if (col.columns[j]["type"] == "dateTime") {
         col.columns[j]["type"] = "datetime";
       }
@@ -57,8 +63,7 @@ function Relation() {
     // 去除表前缀
     var trans = ReplacePrefix(prefix, all_table[i]);
 
-    col.name = trans;
-    //col.name = Studio("relation.translate", trans);
+    col.name = Studio("relation.translate", trans);
     col.decription = col.name;
     col.table = {};
     col.table.name = all_table[i];
@@ -71,16 +76,6 @@ function Relation() {
   }
 
   table_arr = Studio("relation.other", table_arr);
-
-  table_arr = Studio("relation.BatchModel", table_arr);
-
-  for (var t in table_arr) {
-    for (var c in table_arr["columns"]) {
-      table_arr[t]["columns"][c]["label"] = FieldHandle(
-        table_arr[t]["columns"][c]["label"]
-      );
-    }
-  }
 
   return table_arr;
 }
