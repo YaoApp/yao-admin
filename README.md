@@ -41,7 +41,7 @@ step2:克隆本项目,运行 `yao start` 进入到配置页面 `http://127.0.0.1
 
 step3:根据步骤配置好数据库连接,等待项目文件生成,然后进入后台管理系统 `http://127.0.0.1:5099/yao/login/admin`
 
-![首页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/1666923331542.png)
+![首页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E5%95%86%E5%9F%8E/1666923331542.png)
 
 ![登录后](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/1666923455896.png)
 
