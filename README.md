@@ -13,13 +13,29 @@
 Yao Admin 是使用 <a href="https://github.com/YaoApp/yao">Yao</a>构建的项目，通过连接数据库，一键生成管理系统的后台，从而实现真正的零代码。
 基于 Yao Studio 的功能，能够生成数据模型，表格样式，表格组件等描述文件。
 
+# 安装预览
+
+![安装](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/%E5%AE%89%E8%A3%85.gif)
+
 # Demo
 
 ## litemall 商城预览
 
 github 项目地址 [仓库](https://github.com/linlinjava/litemall)
 
-!["看板预览"](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%95%86%E5%9F%8E/d435f3ba-f255-462e-83ab-403fdcd5bf5a.gif)
+!["看板预览"](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E9%A2%84%E8%A7%88.gif)
+
+## mall 商城预览
+
+github 项目地址 [仓库](https://github.com/macrozheng/mall)
+
+![展示页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E9%A2%84%E8%A7%88.gif)
+
+## akaunting 预览图
+
+github 项目地址 [仓库](https://github.com/akaunting/akaunting)
+
+![图片预览3](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/akaunting%E9%A2%84%E8%A7%88%E5%9B%BE.gif)
 
 ## 安装
 
