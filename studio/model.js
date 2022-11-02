@@ -3,6 +3,7 @@
  * 创建模型
  */
 function Create() {
+  console.log(parseInt(Date.now() / 1000));
   var model_dsl = Studio("schema.Relation");
 
   var fs = new FS("dsl");
@@ -12,12 +13,14 @@ function Create() {
     Studio("move.Move", "models", table_name);
     fs.WriteFile("/models/" + table_name, table);
   }
+  console.log(parseInt(Date.now() / 1000));
   // 创建表格dsl
   Studio("table.Create", model_dsl);
   version10_0_2();
   login();
   // 创建菜单
   Studio("menu.Create", model_dsl);
+  console.log(parseInt(Date.now() / 1000));
 }
 
 //创建单个表格的studio
