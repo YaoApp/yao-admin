@@ -49,6 +49,8 @@ function Hidden(type) {
       "id",
       "ID",
       "update_time",
+      "password",
+      "pwd",
     ];
   }
 
@@ -298,7 +300,7 @@ function toForm(model_dsl) {
         preset: { back: {}, save: { back: true } },
         actions: [
           {
-            title: "测试Studio",
+            title: "重新生成代码",
             icon: "icon-layers",
             action: {
               "Studio.model": {

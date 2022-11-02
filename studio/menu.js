@@ -32,7 +32,7 @@ function Create(model_dsl) {
       item.visible_menu = 1;
       // child.push(item);
       if (i == 0) {
-        var icon = GetIcon(name);
+        var icon = "icon-align-justify";
         item.icon = icon;
         insert[1] = item;
       } else {
