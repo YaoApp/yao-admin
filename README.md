@@ -78,7 +78,7 @@ docker run -d --name yao-admin -v yao-admin:/data/app -p <PORT>:5099 yaoapp/yao-
 
 
 
-## Demo
+## 效果演示
 
 #### litemall 商城预览 github 项目地址 [仓库](https://github.com/linlinjava/litemall)
 
