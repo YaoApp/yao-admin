@@ -77,17 +77,23 @@ docker run -d --name yao-admin -v yao-admin:/data/app -p <PORT>:5099 yaoapp/yao-
 
 ## 效果演示
 
-#### litemall 商城预览 github 项目地址 [仓库](https://github.com/linlinjava/litemall)
+#### mall 商城管理后台 
 
-!["看板预览"](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E9%A2%84%E8%A7%88.gif)
-
-
-#### mall 商城预览 github 项目地址 [仓库](https://github.com/macrozheng/mall)
+项目地址 [github.com/macrozheng/mall](https://github.com/macrozheng/mall)
 
 ![展示页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E9%A2%84%E8%A7%88.gif)
 
 
-#### akaunting 预览图 github 项目地址 [仓库](https://github.com/akaunting/akaunting)
+#### litemall 小程序商城管理后台  
+
+项目地址 [github.com/linlinjava/litemall](https://github.com/linlinjava/litemall)
+
+!["看板预览"](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E9%A2%84%E8%A7%88.gif)
+
+
+#### akaunting 管理后台  
+
+项目地址 [github.com/akaunting/akaunting](https://github.com/akaunting/akaunting)
 
 ![图片预览3](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/akaunting%E9%A2%84%E8%A7%88%E5%9B%BE.gif)
 
