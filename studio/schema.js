@@ -38,7 +38,11 @@ function Relation() {
     // console.log(col.columns);
     // return;
 
+    var id_flag = false;
     for (var j in col.columns) {
+      if (col.columns[j]["name"] == "id" || col.columns[j]["name"] === "ID") {
+        id_flag = true;
+      }
       // col.columns[j]["label"] = FieldHandle(col.columns[j]["label"]);
       if (col.columns[j]["type"] == "dateTime") {
         col.columns[j]["type"] = "datetime";
@@ -52,6 +56,11 @@ function Relation() {
       ) {
         col.columns[j]["type"] = "tinyInteger";
       }
+    }
+    // 如果没有id的表就不要显示了
+    if (!id_flag) {
+      all_table.splice(i, 1);
+      continue;
     }
 
     // 去除表前缀
