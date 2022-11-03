@@ -79,7 +79,7 @@ docker run -d --name yao-admin -v /path/app/root:/data/app -p <PORT>:5099 yaoapp
 
 ## 效果演示
 
-使用 Yao-Admin 生成一些开源项目的管理后台
+我们找了一些优秀的开源项目，测试 Yao-Admin 生成管理后台的实际效果。
 
 #### mall 商城管理后台 
 
