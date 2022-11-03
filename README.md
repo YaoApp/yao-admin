@@ -77,6 +77,8 @@ docker run -d --name yao-admin -v yao-admin:/data/app -p <PORT>:5099 yaoapp/yao-
 
 ## 效果演示
 
+使用 Yao-Admin 生成一些开源项目的管理后台
+
 #### mall 商城管理后台 
 
 Github 地址 [github.com/macrozheng/mall](https://github.com/macrozheng/mall)
