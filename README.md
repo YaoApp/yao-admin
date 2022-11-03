@@ -37,8 +37,6 @@ Yao Admin 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎开发<
 
 ### 安装
 
-克隆本项目到你的电脑 `git clone https://github.com/YaoApp/yao-admin`
-
 #### 使用 Yao
 
 [安装 YAO](https://yaoapps.com/doc/%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
