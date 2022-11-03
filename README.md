@@ -63,7 +63,7 @@ yao start
 [安装 Docker](https://docs.docker.com/get-docker/)
 
 ```bash
-docker run -d --name yao-admin -v yao-admin:/data/app -p <PORT>:5099 yaoapp/yao-admin:0.10.2`
+docker run -d --name yao-admin -v /path/app/root:/data/app -p <PORT>:5099 yaoapp/yao-admin:0.10.2`
 ```
 
 
