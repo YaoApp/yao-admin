@@ -20,8 +20,7 @@
 </p>
 
 
-真零代码，使用 Yao-Admin 连接数据库你就有一个管理后台。
-
+真零代码，使用 Yao-Admin 只需连接数据库，你就有了一个管理后台。
 
 ![演示](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/%E6%80%BB%E9%A2%84%E8%A7%88.gif)
 
