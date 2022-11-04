@@ -12,8 +12,18 @@ jobs:
   release:
     runs-on: "ubuntu-latest"
     steps:
+      - name: Install coscmd
+        run: sudo pip3 install coscmd
+
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: pack for Station (@Silicon Valley)
+        run: |
+          cp -r . ../dist
+          rm -rf ../dist/.git
+          rm -rf ../dist/logs
+          zip -r -q -o latest.zip ../dist/ .
 
       - name: Configure COS For Silicon Valley
         env:
@@ -23,8 +33,7 @@ jobs:
           REGION: na-siliconvalley
         run: |
           ls -l .
-          ls -l ../
           coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
       - name: Push To Silicon Valley
         run: |
-          for file in ./dist/release/*; do coscmd upload $file /apps/yaoapp/yao-admin/; done;
+          for file in ./latest.zip; do coscmd upload $file /apps/yaoapp/yao-admin/; done;
