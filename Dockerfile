@@ -23,8 +23,8 @@ RUN rm -rf /data/app/.git  && \
     chown -R yao:yao /data/db && \
     chmod +x /usr/local/bin/yao 
 
-USER yao
-VOLUME [ "/data/app" ]
-WORKDIR /data/app
+USER root
+VOLUME [ "/data" ]
+WORKDIR /data
 EXPOSE 5099
 CMD ["/usr/local/bin/yao", "start"]	
