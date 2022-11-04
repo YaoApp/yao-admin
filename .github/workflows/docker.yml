@@ -5,7 +5,7 @@ on:
       tags:
         description: "Comment"
   push:
-    branches: [main, master]
+    branches: [main]
     paths:
       - "app.json"
       - ".github/workflows/docker.yml"
