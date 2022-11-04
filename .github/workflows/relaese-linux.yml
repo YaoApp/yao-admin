@@ -22,10 +22,7 @@ jobs:
         run: |
           rm -rf ./.git
           rm -rf ./.github
-          cp -r . ../dist
-          rm -rf ../dist/.git
-          rm -rf ../dist/logs
-          zip -r -q -o latest.zip ../dist/
+          zip -q -r latest.zip *
 
       - name: Configure COS For Silicon Valley
         env:
