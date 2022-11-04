@@ -36,4 +36,4 @@ jobs:
           coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
       - name: Push To Silicon Valley
         run: |
-          for file in ./latest.zip; do coscmd upload $file /apps/yaoapp/yao-admin/; done;
+          for file in ./latest.zip; do coscmd upload $file /apps/; done;
