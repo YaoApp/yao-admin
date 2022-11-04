@@ -20,6 +20,8 @@ jobs:
 
       - name: pack for Station (@Silicon Valley)
         run: |
+          rm -rf ./.git
+          rm -rf ./.github
           cp -r . ../dist
           rm -rf ../dist/.git
           rm -rf ../dist/logs
