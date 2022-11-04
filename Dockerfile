@@ -15,8 +15,15 @@ RUN rm -rf /data/app/.git  && \
     rm -rf /data/app/*.sh  && \
     rm -rf /data/app/.env  && \
     mkdir -p /data/logs && \
+    mkdir -p /data/charts && \
+    mkdir -p /data/tables && \
+    mkdir -p /data/models && \
+    mkdir -p /data/forms && \
     mkdir -p /data/db && \
     mkdir -p /data/app/data && \
+    mkdir -p /data/flows && \
+    mkdir -p /data/flows/app && \
+    mkdir -p /data/models && \
     chown -R yao:yao /data/app && \
     chown -R yao:yao /data/app/data && \
     chown -R yao:yao /data/logs && \
