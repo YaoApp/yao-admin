@@ -30,10 +30,10 @@ jobs:
           SECRET_ID: ${{ secrets.COS_ID }}
           SECRET_KEY: ${{ secrets.COS_KEY }}
           BUCKET: mirrors-1252011659
-          REGION: na-siliconvalley
+          REGION: ap-beijing
         run: |
           ls -l .
           coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
       - name: Push To Silicon Valley
         run: |
-          for file in ./latest.zip; do coscmd upload $file /apps/; done;
+          for file in ./latest.zip; do coscmd upload $file /apps/yaoapp/yao-admin/; done;
