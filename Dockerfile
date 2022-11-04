@@ -17,7 +17,7 @@ RUN rm -rf /data/app/.git  && \
     mkdir -p /data/logs && \
     mkdir -p /data/db && \
     mkdir -p /data/app/data && \
-    chown -R root:root /data/app && \
+    chown -R yao:yao /data/app && \
     chown -R yao:yao /data/app/data && \
     chown -R yao:yao /data/logs && \
     chown -R yao:yao /data/db && \
