@@ -1,0 +1,30 @@
+name: Release Linux
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Version tags"
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Configure COS For Silicon Valley
+        env:
+          SECRET_ID: ${{ secrets.COS_ID }}
+          SECRET_KEY: ${{ secrets.COS_KEY }}
+          BUCKET: mirrors-1252011659
+          REGION: na-siliconvalley
+        run: |
+          ls -l .
+          ls -l ../
+          coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
+      - name: Push To Silicon Valley
+        run: |
+          for file in ./dist/release/*; do coscmd upload $file /apps/yaoapp/yao-admin/; done;
