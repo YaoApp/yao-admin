@@ -44,7 +44,7 @@ function Create(model_dsl) {
       insert.push(item);
     }
   }
-
+  Studio("move.Mkdir", "flows");
   Studio("move.Mkdir", "flows/app");
   var fs = new FS("dsl");
 
