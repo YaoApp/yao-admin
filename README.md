@@ -19,7 +19,6 @@
   </a>
 </p>
 
-
 真零代码，使用 Yao-Admin 连接数据库，你就有了一个管理后台。
 
 ![演示](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/%E6%80%BB%E9%A2%84%E8%A7%88.gif)
@@ -34,13 +33,11 @@ Yao Admin 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎开发<
 
 3.**接口生成** 低代码方式制作 API 接口，支持多种鉴权方式
 
-
 ### 安装
 
 #### 使用 Yao
 
 [安装 YAO](https://yaoapps.com/doc/%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
-
 
 ```bash
 mkdir -p /path/app/root
@@ -50,58 +47,50 @@ yao start
 
 根据命令行提示配置后登录管理后台
 
-管理后台地址:  `http://<IP>:<PORT>/yao/`
+管理后台地址: `http://<IP>:<PORT>/yao/`
 
 默认用户名: `xiang@iqka.com`
 
-默认密码:  `A123456p+`
+默认密码: `A123456p+`
 
-
-
-#### 使用 Docker 
+#### 使用 Docker
 
 [安装 Docker](https://docs.docker.com/get-docker/)
+
+```
+docker pull yaoapp/yao-admin:0.10.2-amd64
+```
 
 ```bash
 docker run -d --name yao-admin -v /path/app/root:/data/app -p <PORT>:5099 yaoapp/yao-admin:0.10.2`
 ```
 
-
 根据命令行提示配置后登录管理后台
 
-管理后台地址:  `http://<IP>:<PORT>/yao/`
+管理后台地址: `http://<IP>:<PORT>/yao/`
 
 默认用户名: `xiang@iqka.com`
 
-默认密码:  `A123456p+`
-
-
+默认密码: `A123456p+`
 
 ## 效果演示
 
 我们找了一些优秀的开源项目，测试 Yao-Admin 生成管理后台的实际效果。
 
-#### mall 商城管理后台 
+#### mall 商城管理后台
 
 Github 地址 [github.com/macrozheng/mall](https://github.com/macrozheng/mall)
 
 ![展示页](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E9%A2%84%E8%A7%88.gif)
 
-
-#### litemall 小程序商城管理后台  
+#### litemall 小程序商城管理后台
 
 Github 地址 [github.com/linlinjava/litemall](https://github.com/linlinjava/litemall)
 
 !["看板预览"](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/litemall%E9%A2%84%E8%A7%88.gif)
 
-
-#### akaunting 管理后台  
+#### akaunting 管理后台
 
 Github 地址 [github.com/akaunting/akaunting](https://github.com/akaunting/akaunting)
 
 ![图片预览3](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/akaunting%E9%A2%84%E8%A7%88%E5%9B%BE.gif)
-
-
-
-
-
