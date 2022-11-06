@@ -113,6 +113,16 @@ function toTable(model_dsl) {
                 },
               },
             },
+            {
+              title: "删除",
+              icon: "icon-trash-2",
+              action: { "Table.delete": {} },
+              style: "danger",
+              confirm: {
+                title: "提示",
+                desc: "确认删除，删除后数据无法恢复？",
+              },
+            },
           ],
         },
       },
@@ -307,6 +317,16 @@ function toForm(model_dsl) {
                 method: "CreateOne",
                 args: [model_dsl.table.name],
               },
+            },
+          },
+          {
+            title: "删除",
+            icon: "icon-trash-2",
+            action: { "Form.delete": { pathname: "/x/Table/"+model_dsl.table.name } },
+            style: "danger",
+            confirm: {
+              title: "提示",
+              desc: "确认删除，删除后数据无法恢复？",
             },
           },
         ],
