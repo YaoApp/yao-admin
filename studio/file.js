@@ -76,7 +76,10 @@ function FormFile(column, component, model_dsl) {
             args: ["$C(row)", "$C(type)", name, model_dsl["table"]["name"]],
           },
           // compute: "scripts.file.image.ImagesEdit",
-          props: { filetype: "image", api: "/api/xiang/storage/upload" },
+          props: {
+            filetype: "image",
+            $api: { process: "fs.system.Upload" },
+          },
         },
       };
       return component;
