@@ -62,7 +62,7 @@ docker pull yaoapp/yao-admin:0.10.2-amd64
 ```
 
 ```bash
-docker run -d --name yao-admin -v /path/app/root:/data/app -p <PORT>:5099 yaoapp/yao-admin:0.10.2`
+docker run -d --restart unless-stopped --name yao-admin -p 5099:5099 <image ID>
 ```
 
 根据命令行提示配置后登录管理后台
