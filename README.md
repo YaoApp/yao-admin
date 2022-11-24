@@ -35,12 +35,17 @@ Yao Admin 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎开发<
 
 ### 安装
 
+首先准备好一个有数据表的数据库
+
 #### 使用 Yao
+
+
 
 [安装 YAO](https://yaoapps.com/doc/%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
 
 ```bash
-mkdir -p /path/app/root
+mkdir -p /app/data
+cd /app/data
 yao get yaoapp/yao-admin
 yao start
 ```
@@ -48,6 +53,10 @@ yao start
 根据命令行提示配置后登录管理后台
 
 管理后台地址: `http://<IP>:<PORT>/yao/`
+
+示例:` http://127.0.0.1:5099/yao`
+
+进入到页面后配置数据库,选择之前准备好的数据库,然后等待配置完成,进入登录页面
 
 默认用户名: `xiang@iqka.com`
 
@@ -68,6 +77,8 @@ docker run -d --restart unless-stopped --name yao-admin -p 5099:5099 yaoapp/yao-
 根据命令行提示配置后登录管理后台
 
 管理后台地址: `http://<IP>:<PORT>/yao/`
+
+示例:` http://127.0.0.1:5099/yao`
 
 默认用户名: `xiang@iqka.com`
 

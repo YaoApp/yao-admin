@@ -1,6 +1,6 @@
 # 使用方法:
 
-克隆项目后,执行 `yao start`,打开配置界面`http://127.0.0.1:5099`配置好数据库配置
+克隆项目后,执行 `yao start`,打开配置界面`http://127.0.0.1:5099`配置好数据库配置,注意:数据库里面要有数据表,否则不会生成页面
 
 ![配置界面](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/mall%E5%95%86%E5%9F%8E/1.png)
 

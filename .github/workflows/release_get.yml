@@ -1,4 +1,4 @@
-name: Release Linux
+name: Release Get
 
 on:
   workflow_dispatch:
@@ -7,7 +7,8 @@ on:
         description: "Version tags"
   push:
     branches: [main]
-
+env:
+  IMAGE_NAME: ${{ github.event.repository.name }}
 jobs:
   release:
     runs-on: "ubuntu-latest"
@@ -20,9 +21,12 @@ jobs:
 
       - name: pack for Station (@Silicon Valley)
         run: |
+          mkdir ../app
           rm -rf ./.git
           rm -rf ./.github
-          zip -q -r latest.zip *
+          cp -r * ../app
+          cd ..
+          zip -q -r latest.zip ./app
 
       - name: Configure COS For Silicon Valley
         env:
@@ -35,4 +39,4 @@ jobs:
           coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
       - name: Push To Silicon Valley
         run: |
-          for file in ./latest.zip; do coscmd upload $file /apps/yaoapp/yao-admin/docker/; done;
+          for file in ./latest.zip; do coscmd upload $file /apps/yaoapp/yao-admin/; done;

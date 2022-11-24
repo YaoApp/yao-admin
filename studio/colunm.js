@@ -30,6 +30,7 @@ function Hidden(type) {
   if (type == 1) {
     // 不展示的名单列表
     var hidden = [
+      "secret",
       "password",
       "del",
       "delete",
