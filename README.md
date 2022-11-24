@@ -35,7 +35,7 @@ Yao Admin 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎开发<
 
 ### 安装
 
-首先准备好一个有数据表的数据库
+**首先准备好一个有数据表的数据库**
 
 #### 使用 Yao
 
