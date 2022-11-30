@@ -22,6 +22,11 @@ function GetTableName() {
  */
 function Relation() {
   var all_table = GetTableName();
+  var table_num = all_table.length;
+  if (table_num > 80) {
+    log.Error("Data tables cannot exceed 80!");
+    throw new Exception("Data tables cannot exceed 80!", 500);
+  }
   var table_arr = [];
 
   // 不需要的表格白名单
