@@ -1,6 +1,6 @@
 #docker build --platform linux/amd64 --tag yao-admin .
 #docker run -d --restart unless-stopped --name yao-admin -p 5099:5099 yao-admin
-FROM yaoapp/yao:0.10.2-amd64
+FROM yaoapp/yao:0.10.3-amd64
 ARG VERSION
 WORKDIR /data
 
