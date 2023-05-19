@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "app.json"
+      - "app.yao"
       - ".github/workflows/docker.yml"
 env:
   IMAGE_ORG: yaoapp
@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Version
         run: |
-          VERSION=$(cat app.json |grep version |awk -F : '{print $2}' | sed 's/"//g' | sed 's/,//g' | sed 's/ //g')
+          VERSION=$(cat app.yao |grep version |awk -F : '{print $2}' | sed 's/"//g' | sed 's/,//g' | sed 's/ //g')
           if [ -z "$VERSION" ]; then 
             VERSION=1.0.0
           fi
