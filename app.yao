@@ -3,17 +3,20 @@
   "name": "::Demo Application",
   "short": "::Demo",
   "description": "::Another yao application",
-  "version": "0.10.2",
+  "version": "yao-0.10.3-dev",
+  "adminRoot": "admin",
+  "setup": "studio.model.Create",
   "menu": {
     "process": "flows.app.menu",
     "args": [
       "demo"
     ]
   },
-  "setup": "studio.model.Create",
-  "adminRoot": "yao",
   "optional": {
     "hideNotification": true,
-    "hideSetting": false
+    "hideSetting": false,
+    "neo": {
+      "api": "/neo"
+    }
   }
 }

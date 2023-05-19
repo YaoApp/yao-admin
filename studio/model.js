@@ -8,15 +8,16 @@ function Create() {
 
   var fs = new FS("dsl");
   for (var i in model_dsl) {
-    var table_name = model_dsl[i]["table"]["name"] + ".mod.json";
+    var table_name = model_dsl[i]["table"]["name"] + ".mod.yao";
     var table = JSON.stringify(model_dsl[i]);
     Studio("move.Move", "models", table_name);
     fs.WriteFile("/models/" + table_name, table);
   }
+  Process("models.admin.user.migrate");
   console.log(parseInt(Date.now() / 1000));
   // 创建表格dsl
   Studio("table.Create", model_dsl);
-  version10_0_2();
+  version10_0_3();
   login();
   // 创建菜单
   Studio("menu.Create", model_dsl);
@@ -31,10 +32,10 @@ function CreateOne(model_name) {
   var fs = new FS("dsl");
   var model_dsl = [];
 
-  model_dsl.push(JSON.parse(fs.ReadFile("models/" + model_name + ".mod.json")));
+  model_dsl.push(JSON.parse(fs.ReadFile("models/" + model_name + ".mod.yao")));
 
   for (var i in model_dsl) {
-    var table_name = model_dsl[i]["table"]["name"] + ".mod.json";
+    var table_name = model_dsl[i]["table"]["name"] + ".mod.yao";
     var table = JSON.stringify(model_dsl[i]);
     Studio("move.Move", "models", table_name);
     fs.WriteFile("/models/" + table_name, table);
@@ -72,12 +73,42 @@ function version10_0_2() {
     })
   );
 }
+/**
+ * 写入10.2版本的
+ */
+function version10_0_3() {
+  var fs = new FS("dsl");
+
+  fs.WriteFile(
+    "app.yao",
+    JSON.stringify({
+      xgen: "1.0",
+      name: "::Demo Application",
+      short: "::Demo",
+      description: "::Another yao application",
+      version: "yao-0.10.3-dev",
+      adminRoot: "admin",
+      setup: "studio.model.Create",
+      menu: {
+        process: "flows.app.menu",
+        args: ["demo"],
+      },
+      optional: {
+        hideNotification: true,
+        hideSetting: false,
+        neo: {
+          api: "/neo",
+        },
+      },
+    })
+  );
+}
 function login() {
   var fs = new FS("dsl");
   // var menu = Process("models.xiang.menu.get", {
   //   limit: 1,
   // });
-  var table_name = "admin.login.json";
+  var table_name = "admin.login.yao";
   var table = JSON.stringify({
     name: "::Admin Login",
     action: {

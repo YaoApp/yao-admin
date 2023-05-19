@@ -79,14 +79,17 @@ function translate(keywords) {
   var keywords = keywords.split("_");
   //console.log(keywords);
   var url = "https://brain.yaoapps.com/api/keyword/column";
-  let response = Process(
-    "xiang.network.PostJSON",
-    url,
-    {
-      keyword: keywords,
-    },
-    {}
-  );
+  let response = http.Post(url, {
+    keyword: keywords,
+  });
+  // let response = Process(
+  //   "xiang.network.PostJSON",
+  //   url,
+  //   {
+  //     keyword: keywords,
+  //   },
+  //   {}
+  // );
   var res = keywords;
   if (response.status == 200) {
     if (response.data.data) {
@@ -106,14 +109,17 @@ function translate(keywords) {
  */
 function BatchTranslate(keywords) {
   var url = "https://brain.yaoapps.com/api/keyword/batch_column";
-  let response = Process(
-    "xiang.network.PostJSON",
-    url,
-    {
-      keyword: keywords,
-    },
-    {}
-  );
+  let response = http.Post(url, {
+    keyword: keywords,
+  });
+  // let response = Process(
+  //   "xiang.network.PostJSON",
+  //   url,
+  //   {
+  //     keyword: keywords,
+  //   },
+  //   {}
+  // );
   var res = keywords;
   if (response.status == 200) {
     if (response.data.data) {
@@ -130,14 +136,18 @@ function BatchTranslate(keywords) {
  */
 function BatchModel(keywords) {
   var url = "https://brain.yaoapps.com/api/keyword/batch_model";
-  let response = Process(
-    "xiang.network.PostJSON",
-    url,
-    {
-      keyword: keywords,
-    },
-    {}
-  );
+
+  let response = http.Post(url, {
+    keyword: keywords,
+  });
+  // let response = Process(
+  //   "xiang.network.PostJSON",
+  //   url,
+  //   {
+  //     keyword: keywords,
+  //   },
+  //   {}
+  // );
 
   var res = keywords;
   if (response.status == 200) {

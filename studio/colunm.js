@@ -306,31 +306,45 @@ function toForm(model_dsl) {
       },
     },
     layout: {
+      actions: [
+        {
+          title: "保存",
+          icon: "icon-check",
+
+          showWhenAdd: true,
+
+          style: "primary",
+          action: [
+            {
+              name: "Submit",
+              type: "Form.submit",
+              payload: {},
+            },
+            {
+              name: "Back",
+              type: "Common.closeModal",
+              payload: {},
+            },
+          ],
+        },
+        {
+          title: "返回",
+          divideLine: true,
+          showWhenAdd: true,
+          showWhenView: true,
+          icon: "icon-arrow-left",
+          action: [
+            {
+              name: "closeModal",
+              type: "Common.closeModal",
+              payload: {},
+            },
+          ],
+        },
+      ],
       primary: "id",
       operation: {
         preset: { back: {}, save: { back: true } },
-        actions: [
-          {
-            title: "重新生成代码",
-            icon: "icon-layers",
-            action: {
-              "Studio.model": {
-                method: "CreateOne",
-                args: [model_dsl.table.name],
-              },
-            },
-          },
-          {
-            title: "删除",
-            icon: "icon-trash-2",
-            action: { "Form.delete": { pathname: "/x/Table/"+model_dsl.table.name } },
-            style: "danger",
-            confirm: {
-              title: "提示",
-              desc: "确认删除，删除后数据无法恢复？",
-            },
-          },
-        ],
       },
       form: {
         props: {},

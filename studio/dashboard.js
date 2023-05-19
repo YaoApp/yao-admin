@@ -1,10 +1,10 @@
 function Create(menu_arr, type) {
   var fs = new FS("dsl");
 
-  Studio("move.Move", "charts", "dashboard.chart.json");
+  Studio("move.Move", "charts", "dashboard.chart.yao");
   var dsl = Dsl(menu_arr, type);
   var dsl = JSON.stringify(dsl);
-  fs.WriteFile("/charts/" + "dashboard.chart.json", dsl);
+  fs.WriteFile("/charts/" + "dashboard.chart.yao", dsl);
 }
 function Dsl(menu_arr, type) {
   var dsl = {

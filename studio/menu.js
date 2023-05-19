@@ -51,11 +51,11 @@ function Create(model_dsl) {
   var dsl = {
     name: "APP Menu",
     nodes: [],
-    output: insert,
+    output: { items: insert, setting: [] },
   };
 
   var dsl = JSON.stringify(dsl);
-  fs.WriteFile("/flows/app/menu.flow.json", dsl);
+  fs.WriteFile("/flows/app/menu.flow.yao", dsl);
 
   // 创建看板
   if (total >= 10) {
@@ -73,7 +73,8 @@ function Create(model_dsl) {
  */
 function GetIcon(name) {
   var url = "https://brain.yaoapps.com/api/icon/search?name=" + name;
-  let response = Process("xiang.network.Get", url, {}, {});
+  let response = http.Get(url);
+  // let response = Process("xiang.network.Get", url, {}, {});
   if (response.status == 200) {
     return response.data.data;
   }
